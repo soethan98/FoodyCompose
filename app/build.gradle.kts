@@ -85,6 +85,9 @@ dependencies {
 
     /// Navigation
     implementation("androidx.navigation:navigation-compose:2.7.5")
+
+    /// Image Loading
+    implementation("io.coil-kt:coil-compose:2.5.0")
 }
 
 // Allow references to generated code
