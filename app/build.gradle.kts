@@ -4,13 +4,17 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("kotlinx-serialization")
 }
+
+
 
 android {
     namespace = "com.soethan.foodycompose"
     compileSdk = 34
 
     defaultConfig {
+
         applicationId = "com.soethan.foodycompose"
         minSdk = 24
         targetSdk = 34
@@ -21,6 +25,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField("String","API_KEY", project.properties["API_KEY"].toString())
     }
 
     buildTypes {
@@ -41,6 +46,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -75,10 +81,17 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+
     /// Ktor
-    implementation("io.ktor:ktor-client-core:2.3.6")
-    implementation("io.ktor:ktor-client-android:2.3.6")
-    implementation("io.ktor:ktor-client-serialization:2.3.6")
+    val ktorVersion= "2.3.6"
+    implementation("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-android:$ktorVersion")
+    implementation("io.ktor:ktor-client-serialization:$ktorVersion")
+    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+    implementation("io.ktor:ktor-client-logging:$ktorVersion")
+
     /// Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
@@ -88,6 +101,8 @@ dependencies {
 
     /// Image Loading
     implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+
 }
 
 // Allow references to generated code
