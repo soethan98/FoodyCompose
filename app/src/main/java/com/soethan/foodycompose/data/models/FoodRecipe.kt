@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-data class FoodRecipe(
-    val recipes: List<Recipe>
+data class FoodRecipeDto(
+    val recipes: List<RecipeDto>
 )

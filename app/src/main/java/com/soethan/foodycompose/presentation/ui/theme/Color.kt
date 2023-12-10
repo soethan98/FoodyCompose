@@ -1,4 +1,4 @@
-package com.soethan.foodycompose.ui.theme
+package com.soethan.foodycompose.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Recipe(
+data class RecipeDto(
     val id: Int,
     val title: String,
     val image: String

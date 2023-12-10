@@ -16,9 +16,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.soethan.foodycompose.data.models.FoodRecipe
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.soethan.foodycompose.data.remote.SpoonacularClient
-import com.soethan.foodycompose.ui.theme.FoodyComposeTheme
+import com.soethan.foodycompose.presentation.navigation.FoodyNavigation
+import com.soethan.foodycompose.presentation.ui.theme.FoodyComposeTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -28,23 +30,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            var scope = rememberCoroutineScope()
-            var recipes by remember {
-                mutableStateOf<FoodRecipe?>(null)
-            }
-
-            LaunchedEffect(key1 = Unit) {
-                scope.launch {
-                    recipes = client.getRandomRecipes()
-                }
-            }
             FoodyComposeTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting(recipes?.recipes?.first()?.title ?: "Null recipe")
+                    MainScreen()
                 }
             }
         }

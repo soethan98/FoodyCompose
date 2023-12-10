@@ -1,4 +1,4 @@
-package com.soethan.foodycompose.ui.components
+package com.soethan.foodycompose.presentation.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package com.soethan.foodycompose.ui.theme
+package com.soethan.foodycompose.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

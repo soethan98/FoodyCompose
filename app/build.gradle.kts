@@ -103,6 +103,15 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
+    implementation("androidx.fragment:fragment-ktx:1.4.5")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
+
+//    fragment_ktx = "1.4.5"
+//    fragment_navigation_ktx = "2.5.3"
+//    androidx_fragment_ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment_ktx" }
+//    androidx_navigation_fragment_ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "fragment_navigation_ktx"}
+//    androidx_navigation_ui_ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "fragment_navigation_ktx"}
 }
 
 // Allow references to generated code
