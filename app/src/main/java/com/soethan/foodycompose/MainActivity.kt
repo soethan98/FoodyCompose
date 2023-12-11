@@ -21,11 +21,12 @@ import androidx.navigation.compose.rememberNavController
 import com.soethan.foodycompose.data.remote.SpoonacularClient
 import com.soethan.foodycompose.presentation.navigation.FoodyNavigation
 import com.soethan.foodycompose.presentation.ui.theme.FoodyComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-class MainActivity : ComponentActivity() {
 
-    private val client = SpoonacularClient()
+@AndroidEntryPoint
+class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
