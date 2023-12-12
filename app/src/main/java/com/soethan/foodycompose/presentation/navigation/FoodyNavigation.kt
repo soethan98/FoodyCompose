@@ -33,7 +33,7 @@ fun FoodyNavigation(
     NavHost(
         navController = navController,
         startDestination = Screens.RecipeList.route,
-       modifier =  Modifier.padding(bottomBarPadding)
+        modifier = Modifier.padding(bottomBarPadding)
     ) {
 
 
@@ -67,7 +67,8 @@ fun NavGraphBuilder.recipeListScreen(
             activity?.finish()
 
         }
-        RecipeListScreen()
+        RecipeListScreen(
+        )
     }
 }
 

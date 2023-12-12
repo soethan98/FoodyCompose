@@ -13,6 +13,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,16 +34,17 @@ import com.soethan.foodycompose.presentation.navigation.Screens
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
-    val navController:NavHostController = rememberNavController()
+    val navController: NavHostController = rememberNavController()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
 
     Scaffold(
+
         bottomBar = {
             BottomBar(navController, bottomBarState)
         }
-    ){ padding ->
+    ) { padding ->
         FoodyNavigation(
-            startDestination = Screens.RecipeList.route ,
+            startDestination = Screens.RecipeList.route,
             bottomBarPadding = padding,
             bottomBarState = bottomBarState,
             navController = navController

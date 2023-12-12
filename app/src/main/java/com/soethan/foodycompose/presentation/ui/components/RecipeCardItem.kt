@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -33,16 +34,18 @@ import com.soethan.foodycompose.R
 fun RecipeCardItem(modifier: Modifier = Modifier) {
     Surface(modifier = modifier.fillMaxWidth()) {
         Row {
-            Box(modifier = Modifier
-                .fillMaxWidth(0.5f)
-                .padding(end = 8.dp)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.4f)
+                    .padding(end = 8.dp)
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable.beff_meal),
-
                     modifier = Modifier
                         .fillMaxWidth()
+                        .height(120.dp)
                         .clip(
-                            RectangleShape
+                            RoundedCornerShape(12.dp)
                         ),
                     contentDescription = "",
                     contentScale = ContentScale.Crop
