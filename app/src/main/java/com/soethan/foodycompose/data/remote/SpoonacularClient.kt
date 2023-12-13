@@ -45,7 +45,9 @@ class SpoonacularClient @Inject constructor() {
 
     suspend fun getRandomRecipes(): FoodRecipeDto {
         return httpClient.get(RANDOM_RECIPES_URL) {
+            parameter("number","20")
             parameter("apiKey", BuildConfig.API_KEY)
+
         }.body()
 
     }

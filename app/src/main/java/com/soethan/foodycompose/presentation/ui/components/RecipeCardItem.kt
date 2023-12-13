@@ -22,42 +22,51 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.soethan.foodycompose.R
+import com.soethan.foodycompose.domain.models.RecipeEntity
+import com.soethan.foodycompose.utils.parseHTMLSpanned
+import com.soethan.foodycompose.utils.toAnnotatedString
+import kotlin.math.roundToInt
 
 @Composable
-fun RecipeCardItem(modifier: Modifier = Modifier) {
-    Surface(modifier = modifier.fillMaxWidth()) {
+fun RecipeCardItem(modifier: Modifier = Modifier, recipeEntity: RecipeEntity? = null) {
+    Surface(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp)),
+        tonalElevation = 12.dp
+    ) {
         Row {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(0.4f)
-                    .padding(end = 8.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.beff_meal),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(120.dp)
-                        .clip(
-                            RoundedCornerShape(12.dp)
-                        ),
-                    contentDescription = "",
-                    contentScale = ContentScale.Crop
-                )
-            }
+
+
+//            Box(
+//                modifier = Modifier
+//                    .fillMaxWidth(0.4f)
+//                    .padding(end = 8.dp)
+//            ) {
+//                AsyncImage(
+//                    model = recipeEntity!!.image,
+//                    contentDescription = recipeEntity.title,
+//                    contentScale = ContentScale.Crop,
+//                    modifier = Modifier.clip(RoundedCornerShape(12.dp))
+//                )
+//            }
             Column {
-                Text(text = "Beef Tataki", style = MaterialTheme.typography.titleMedium)
+                Text(text = recipeEntity!!.title, style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(
-                    text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dapibus ligula et ante cursus ultrices molestie et risus. Phasellus hendrerit ultrices erat vel interdum. Integer turpis lectus, ullamcorper at viverra non, laoreet vitae augue. Vivamus luctus faucibus dolor tempus venenatis. Aliquam vehicula luctus laoreet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam accumsan sem ut convallis ultricies. Nam feugiat laoreet est convallis tincidunt.",
-                    style = MaterialTheme.typography.labelSmall,
+                    text = recipeEntity.summary!!.parseHTMLSpanned().toAnnotatedString(),
                     maxLines = 3,
+                    style = MaterialTheme.typography.labelSmall,
                     overflow = TextOverflow.Ellipsis
                 )
                 Spacer(modifier = Modifier.height(5.dp))
@@ -73,7 +82,8 @@ fun RecipeCardItem(modifier: Modifier = Modifier) {
                             tint = Color.Red
                         )
                         Text(
-                            text = "11", style = TextStyle(
+                            text = recipeEntity.healthScore.roundToInt().toString(),
+                            style = TextStyle(
                                 fontSize = 12.sp,
                                 color = Color.Red
                             )
@@ -86,25 +96,26 @@ fun RecipeCardItem(modifier: Modifier = Modifier) {
                             tint = Color.Magenta
                         )
                         Text(
-                            text = "45", style = TextStyle(
+                            text = "${recipeEntity.readyInMinutes}", style = TextStyle(
                                 fontSize = 12.sp,
                                 color = Color.Red
                             )
                         )
                     }
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_leaf),
-                            contentDescription = "favorite",
-                            tint = Color.Gray
-                        )
-                        Text(
-                            text = "Vegan", style = TextStyle(
-                                fontSize = 12.sp,
-                                color = Color.Red
+                    if (recipeEntity.vegan)
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_leaf),
+                                contentDescription = "favorite",
+                                tint = Color.Gray
                             )
-                        )
-                    }
+                            Text(
+                                text = "Vegan", style = TextStyle(
+                                    fontSize = 12.sp,
+                                    color = Color.Red
+                                )
+                            )
+                        }
                 }
             }
         }
@@ -112,8 +123,3 @@ fun RecipeCardItem(modifier: Modifier = Modifier) {
 }
 
 
-@Composable
-@Preview
-fun ReceipeCardItemPreview() {
-    RecipeCardItem()
-}

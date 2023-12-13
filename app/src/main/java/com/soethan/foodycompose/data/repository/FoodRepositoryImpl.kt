@@ -7,13 +7,20 @@ import javax.inject.Inject
 class FoodRepositoryImpl @Inject constructor(private val foodRemoteDataSource: FoodRemoteDataSource) :
     FoodRepo {
     override suspend fun getRandomRecipes(): List<RecipeEntity> {
+
         return foodRemoteDataSource.getRandomRecipes().map {
             RecipeEntity(
                 id = it.id,
-                title = it.title,
-                image = it.image
+                title = it.title ?: "",
+                summary = it.summary ?: "",
+                image = it.image ?: "",
 
-            )
+                healthScore = it.healthScore,
+                vegan = it.vegan,
+                readyInMinutes = it.readyInMinutes,
+
+
+                )
         }
     }
 

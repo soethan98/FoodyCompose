@@ -107,6 +107,10 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
 
+
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
+
+
 //    fragment_ktx = "1.4.5"
 //    fragment_navigation_ktx = "2.5.3"
 //    androidx_fragment_ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment_ktx" }
