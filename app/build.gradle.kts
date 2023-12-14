@@ -106,16 +106,12 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.4.5")
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
-
-
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
 
+    // Google fonts
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.5.4")
 
-//    fragment_ktx = "1.4.5"
-//    fragment_navigation_ktx = "2.5.3"
-//    androidx_fragment_ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment_ktx" }
-//    androidx_navigation_fragment_ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "fragment_navigation_ktx"}
-//    androidx_navigation_ui_ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "fragment_navigation_ktx"}
+
 }
 
 // Allow references to generated code

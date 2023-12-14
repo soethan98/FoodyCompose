@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
@@ -56,6 +57,7 @@ fun FoodyNavigation(
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.recipeListScreen(
     navController: NavController, bottomBarPadding: PaddingValues,
     bottomBarState: MutableState<Boolean>
