@@ -9,7 +9,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -38,30 +44,40 @@ import com.soethan.foodycompose.utils.toAnnotatedString
 import kotlin.math.roundToInt
 
 @Composable
-fun RecipeCardItem(modifier: Modifier = Modifier, recipeEntity: RecipeEntity? = null) {
-    Surface(
+fun RecipeCardItem(modifier: Modifier = Modifier, recipeEntity: RecipeEntity) {
+    Card(
+
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp)),
-        tonalElevation = 12.dp
+            .clip(
+                RoundedCornerShape(16.dp),
+            ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 0.dp
+        )
     ) {
-        Row {
-
-
-//            Box(
-//                modifier = Modifier
-//                    .fillMaxWidth(0.4f)
-//                    .padding(end = 8.dp)
-//            ) {
-//                AsyncImage(
-//                    model = recipeEntity!!.image,
-//                    contentDescription = recipeEntity.title,
-//                    contentScale = ContentScale.Crop,
-//                    modifier = Modifier.clip(RoundedCornerShape(12.dp))
-//                )
-//            }
-            Column {
-                Text(text = recipeEntity!!.title, style = MaterialTheme.typography.titleMedium)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            AsyncImage(
+                model = recipeEntity!!.image, contentDescription = recipeEntity.title,
+                contentScale = ContentScale.Crop,
+                alignment = Alignment.Center,
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(RoundedCornerShape(16.dp))
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Column(modifier = Modifier.align(Alignment.CenterVertically)) {
+                Text(
+                    text = recipeEntity!!.title,
+                    style = MaterialTheme.typography.titleMedium,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(
                     text = recipeEntity.summary!!.parseHTMLSpanned().toAnnotatedString(),
@@ -92,13 +108,13 @@ fun RecipeCardItem(modifier: Modifier = Modifier, recipeEntity: RecipeEntity? = 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_clock),
-                            contentDescription = "favorite",
-                            tint = Color.Magenta
+                            contentDescription = "time",
+                            tint = Color(0xffFFC114)
                         )
                         Text(
                             text = "${recipeEntity.readyInMinutes}", style = TextStyle(
                                 fontSize = 12.sp,
-                                color = Color.Red
+                                color = Color(0xffFFC114)
                             )
                         )
                     }
@@ -106,13 +122,13 @@ fun RecipeCardItem(modifier: Modifier = Modifier, recipeEntity: RecipeEntity? = 
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_leaf),
-                                contentDescription = "favorite",
+                                contentDescription = "vegan",
                                 tint = Color.Gray
                             )
                             Text(
                                 text = "Vegan", style = TextStyle(
                                     fontSize = 12.sp,
-                                    color = Color.Red
+                                    color = Color.Gray
                                 )
                             )
                         }
