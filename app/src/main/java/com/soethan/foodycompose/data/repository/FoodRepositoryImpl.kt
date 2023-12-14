@@ -2,6 +2,8 @@ package com.soethan.foodycompose.data.repository
 
 import com.soethan.foodycompose.domain.models.RecipeEntity
 import com.soethan.foodycompose.domain.repo.FoodRepo
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class FoodRepositoryImpl @Inject constructor(private val foodRemoteDataSource: FoodRemoteDataSource) :
@@ -17,10 +19,14 @@ class FoodRepositoryImpl @Inject constructor(private val foodRemoteDataSource: F
 
                 healthScore = it.healthScore,
                 vegan = it.vegan,
-                readyInMinutes = it.readyInMinutes,
+                readyInMinutes = it.readyInMinutes,)
+        }
+    }
 
-
-                )
+    override suspend fun getRandomJoke(): Flow<String> {
+        return flow<String> {
+            val result = foodRemoteDataSource.getRandomJokes()
+            emit(result.text)
         }
     }
 

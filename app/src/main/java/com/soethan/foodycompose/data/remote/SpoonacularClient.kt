@@ -1,8 +1,10 @@
 package com.soethan.foodycompose.data.remote
 
 import com.soethan.foodycompose.BuildConfig
+import com.soethan.foodycompose.data.models.FoodJokeDto
 import com.soethan.foodycompose.data.models.FoodRecipeDto
 import com.soethan.foodycompose.utils.Constants
+import com.soethan.foodycompose.utils.Constants.RANDOM_FOOD_JOKE
 import com.soethan.foodycompose.utils.Constants.RANDOM_RECIPES_URL
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -45,11 +47,18 @@ class SpoonacularClient @Inject constructor() {
 
     suspend fun getRandomRecipes(): FoodRecipeDto {
         return httpClient.get(RANDOM_RECIPES_URL) {
-            parameter("number","20")
+            parameter("number", "20")
             parameter("apiKey", BuildConfig.API_KEY)
 
         }.body()
 
+    }
+
+    suspend fun getRandomFoodJoke(): FoodJokeDto {
+        return httpClient.get(RANDOM_FOOD_JOKE){
+            parameter("apiKey", BuildConfig.API_KEY)
+
+        }.body()
     }
 
 }
