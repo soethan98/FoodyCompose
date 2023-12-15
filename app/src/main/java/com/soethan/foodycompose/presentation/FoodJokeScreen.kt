@@ -3,6 +3,7 @@ package com.soethan.foodycompose.presentation
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -30,7 +31,8 @@ import com.soethan.foodycompose.utils.Resource
 @Composable
 fun FoodJokeScreen(
     modifier: Modifier = Modifier,
-    foodJokeViewModel: FoodJokeViewModel = hiltViewModel()
+    foodJokeViewModel: FoodJokeViewModel = hiltViewModel(),
+    onNavigateToDetail: () -> Unit
 ) {
     val result by foodJokeViewModel.randomJokeState.collectAsStateWithLifecycle()
     Box(modifier = modifier.fillMaxSize()) {
@@ -53,7 +55,10 @@ fun FoodJokeScreen(
                     Card(
                         modifier = Modifier
                             .padding(start = 24.dp, end = 24.dp)
-                            .clip(RoundedCornerShape(6.dp)),
+                            .clip(RoundedCornerShape(6.dp))
+                            .clickable {
+                                onNavigateToDetail()
+                            },
                         border = BorderStroke(width = 1.dp, color = Color.Gray.copy(alpha = 0.5f))
 
                     ) {

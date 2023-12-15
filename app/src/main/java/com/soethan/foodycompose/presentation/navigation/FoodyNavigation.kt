@@ -15,13 +15,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.Navigation
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.soethan.foodycompose.presentation.FavoriteListScreen
 import com.soethan.foodycompose.presentation.FoodJokeScreen
+import com.soethan.foodycompose.presentation.RecipeDetailScreen
 import com.soethan.foodycompose.presentation.RecipeListScreen
+import com.soethan.foodycompose.utils.Constants
 
 @Composable
 fun FoodyNavigation(
@@ -52,6 +56,9 @@ fun FoodyNavigation(
             navController,
             bottomBarState = bottomBarState,
             bottomBarPadding = bottomBarPadding
+        )
+        recipeDetailScreen(
+            navController
         )
     }
 }
@@ -92,7 +99,7 @@ fun NavGraphBuilder.favoriteListScreen(
 }
 
 fun NavGraphBuilder.foodJokeScreen(
-    navController: NavController,
+    navController: NavHostController,
     bottomBarPadding: PaddingValues,
     bottomBarState: MutableState<Boolean>
 ) {
@@ -103,6 +110,21 @@ fun NavGraphBuilder.foodJokeScreen(
         exitTransition = { fadeOut(animationSpec = tween(200)) }
     ) {
         bottomBarState.value = true
-        FoodJokeScreen()
+        FoodJokeScreen {
+            navController.navigate("recipe_detail/123")
+        }
+    }
+}
+
+fun NavGraphBuilder.recipeDetailScreen(
+    navController: NavController
+) {
+    composable(
+        route = Screens.RecipeDetail.route,
+        arguments = listOf(navArgument(Constants.RECIPE_DETAIL_ARGUMENT_KEY) {
+            type = NavType.StringType
+        })
+    ) {
+        RecipeDetailScreen()
     }
 }
