@@ -58,7 +58,8 @@ fun FoodyNavigation(
             bottomBarPadding = bottomBarPadding
         )
         recipeDetailScreen(
-            navController
+            navController,
+            bottomBarState = bottomBarState
         )
     }
 }
@@ -99,7 +100,7 @@ fun NavGraphBuilder.favoriteListScreen(
 }
 
 fun NavGraphBuilder.foodJokeScreen(
-    navController: NavHostController,
+    navController: NavController,
     bottomBarPadding: PaddingValues,
     bottomBarState: MutableState<Boolean>
 ) {
@@ -111,20 +112,24 @@ fun NavGraphBuilder.foodJokeScreen(
     ) {
         bottomBarState.value = true
         FoodJokeScreen {
-            navController.navigate("recipe_detail/123")
+            navController.navigate(Screens.RecipeDetail.passRecipeId("123"))
         }
     }
 }
 
 fun NavGraphBuilder.recipeDetailScreen(
-    navController: NavController
+    navController: NavController,
+    bottomBarState: MutableState<Boolean>
+
 ) {
     composable(
         route = Screens.RecipeDetail.route,
-        arguments = listOf(navArgument(Constants.RECIPE_DETAIL_ARGUMENT_KEY) {
+        arguments = listOf(navArgument("recipeId") {
             type = NavType.StringType
         })
     ) {
+        bottomBarState.value = false
+
         RecipeDetailScreen()
     }
 }
