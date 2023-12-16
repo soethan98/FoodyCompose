@@ -2,7 +2,6 @@ package com.soethan.foodycompose.data.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.math.BigDecimal
 
 @Serializable
 data class RecipeDto(
@@ -19,7 +18,9 @@ data class RecipeDto(
     val glutenFree: Boolean,
     val dairyFree: Boolean,
     val cheap: Boolean,
-    val healthScore: Double
+    val healthScore: Double,
+    @SerialName(value = "extendedIngredients")
+    val ingredients: List<IngredientDto>
 )
 
 

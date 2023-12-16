@@ -7,13 +7,18 @@ import javax.inject.Inject
 
 class FoodRemoteDataSourceImpl @Inject constructor(
     private val spoonacularClient: SpoonacularClient
-): FoodRemoteDataSource{
+) : FoodRemoteDataSource {
     override suspend fun getRandomRecipes(): List<RecipeDto> {
         return spoonacularClient.getRandomRecipes().recipes
     }
 
     override suspend fun getRandomJokes(): FoodJokeDto {
         return spoonacularClient.getRandomFoodJoke()
+    }
+
+
+    override suspend fun getRecipeDetail(id: String): RecipeDto {
+        return spoonacularClient.getRecipeDetail(id)
     }
 
 }

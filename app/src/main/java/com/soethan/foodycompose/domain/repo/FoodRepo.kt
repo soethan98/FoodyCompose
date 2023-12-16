@@ -5,8 +5,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface FoodRepo {
 
-    suspend fun getRandomRecipes():List<RecipeEntity>
+    suspend fun getRandomRecipes(): List<RecipeEntity>
 
 
-   suspend fun getRandomJoke():Flow<String>
+    suspend fun getRandomJoke(): Flow<String>
+
+    suspend fun getRecipeInformation(id: String): RecipeEntity
 }

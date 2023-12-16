@@ -7,5 +7,6 @@ data class RecipeEntity(
     val summary: String?,
     val vegan: Boolean,
     val readyInMinutes: Int,
-    val healthScore: Double
+    val healthScore: Double,
+    val ingredients: List<IngredientEntity>
 )

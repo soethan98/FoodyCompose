@@ -15,6 +15,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -25,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.soethan.foodycompose.R
 import com.soethan.foodycompose.presentation.ui.IngredientsContent
 import com.soethan.foodycompose.presentation.ui.InstructionContent
@@ -33,7 +35,7 @@ import com.soethan.foodycompose.presentation.ui.components.RecipeDetailTabTabRow
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun RecipeDetailScreen(modifier: Modifier = Modifier) {
+fun RecipeDetailScreen(modifier: Modifier = Modifier,recipeDetailViewModel: RecipeDetailViewModel = hiltViewModel()) {
     val tabs = listOf(
         stringResource(id = R.string.overview),
         stringResource(id = R.string.ingredients),
@@ -58,7 +60,11 @@ fun RecipeDetailScreen(modifier: Modifier = Modifier) {
 
         }
     }
+
+    val ingredientState by recipeDetailViewModel.ingredientsStateFlow.collectAsState()
+
     Box(modifier = modifier.fillMaxWidth()) {
+
         Column {
             HeaderTitle()
             RecipeDetailTabTabRow(selectedIndex = selectedTabIndex, tabs = tabs, onTabSelected = {
@@ -71,7 +77,7 @@ fun RecipeDetailScreen(modifier: Modifier = Modifier) {
             ) { index ->
                 when(index){
                     0 -> OverviewContent()
-                    1 -> IngredientsContent()
+                    1 -> IngredientsContent(ingredientList = ingredientState ?: listOf())
                     2 -> InstructionContent()
                 }
             }
