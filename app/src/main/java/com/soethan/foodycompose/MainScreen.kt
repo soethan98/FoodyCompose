@@ -38,10 +38,6 @@ fun MainScreen() {
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
 
     Scaffold(
-//        topBar = {
-//            TopAppBar(title = { Text(text = "FoodyCompose") })
-//        },
-
         bottomBar = {
             BottomBar(navController, bottomBarState)
         }

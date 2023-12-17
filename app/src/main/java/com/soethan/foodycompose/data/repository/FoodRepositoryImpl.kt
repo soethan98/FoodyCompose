@@ -17,9 +17,13 @@ class FoodRepositoryImpl @Inject constructor(private val foodRemoteDataSource: F
                 title = it.title ?: "",
                 summary = it.summary ?: "",
                 image = it.image ?: "",
-
                 healthScore = it.healthScore,
                 vegan = it.vegan,
+                veryHealthy = it.veryHealthy,
+                vegetarian = it.vegetarian,
+                cheap = it.cheap,
+                glutenFree = it.glutenFree,
+                dairyFree = it.dairyFree,
                 readyInMinutes = it.readyInMinutes,
                 ingredients = it.ingredients.map { a ->
                     IngredientEntity(
@@ -31,11 +35,13 @@ class FoodRepositoryImpl @Inject constructor(private val foodRemoteDataSource: F
                         name = a.name,
                         original = a.original,
                         originalName = a.originalName,
-                        unit = a.unit
+                        unit = a.unit,
 
 
-                    )
-                })
+                        )
+                },
+
+                )
         }
     }
 
@@ -56,6 +62,11 @@ class FoodRepositoryImpl @Inject constructor(private val foodRemoteDataSource: F
 
             healthScore = it.healthScore,
             vegan = it.vegan,
+            veryHealthy = it.veryHealthy,
+            vegetarian = it.vegetarian,
+            cheap = it.cheap,
+            glutenFree = it.glutenFree,
+            dairyFree = it.dairyFree,
             readyInMinutes = it.readyInMinutes,
             ingredients = it.ingredients.map { a ->
                 IngredientEntity(

@@ -26,6 +26,11 @@ class RecipeDetailViewModel @Inject constructor(
     val ingredientsStateFlow: StateFlow<List<IngredientEntity>?>
         get() = _ingredients
 
+    private val _recipeDetailState = MutableStateFlow<Resource<RecipeEntity>>(Resource.Idle)
+    val recipeDetailState: StateFlow<Resource<RecipeEntity>>
+        get() = _recipeDetailState
+
+
     init {
         getRecipeInformation()
     }
@@ -34,8 +39,9 @@ class RecipeDetailViewModel @Inject constructor(
     fun getRecipeInformation() {
         viewModelScope.launch {
             try {
+                _recipeDetailState.value = Resource.Loading
                 val result = foodRepo.getRecipeInformation(recipeId)
-                _ingredients.value = result.ingredients
+                _recipeDetailState.value = Resource.Content(result)
 
             } catch (e: Exception) {
                 Log.d("RecipeDetailViewModel", "getRecipeInformation: ${e.message} ")
@@ -43,4 +49,13 @@ class RecipeDetailViewModel @Inject constructor(
         }
     }
 
+
+
+
 }
+
+
+data class RecipeType(
+    val title: String,
+    val isMet: Boolean
+)

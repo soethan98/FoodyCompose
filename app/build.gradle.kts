@@ -112,6 +112,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-text-google-fonts:1.5.4")
 
     implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("com.google.accompanist:accompanist-webview:0.33.2-alpha")
 
 
 

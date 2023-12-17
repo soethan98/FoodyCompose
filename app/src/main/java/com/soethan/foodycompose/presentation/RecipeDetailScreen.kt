@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,17 +30,19 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.soethan.foodycompose.R
 import com.soethan.foodycompose.presentation.ui.IngredientsContent
-import com.soethan.foodycompose.presentation.ui.InstructionContent
 import com.soethan.foodycompose.presentation.ui.OverviewContent
 import com.soethan.foodycompose.presentation.ui.components.RecipeDetailTabTabRow
+import com.soethan.foodycompose.utils.Resource
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun RecipeDetailScreen(modifier: Modifier = Modifier,recipeDetailViewModel: RecipeDetailViewModel = hiltViewModel()) {
+fun RecipeDetailScreen(
+    modifier: Modifier = Modifier,
+    recipeDetailViewModel: RecipeDetailViewModel = hiltViewModel()
+) {
     val tabs = listOf(
         stringResource(id = R.string.overview),
         stringResource(id = R.string.ingredients),
-        stringResource(id = R.string.instruction)
     )
 
     var selectedTabIndex by remember {
@@ -50,18 +53,18 @@ fun RecipeDetailScreen(modifier: Modifier = Modifier,recipeDetailViewModel: Reci
         tabs.size
     }
 
-    LaunchedEffect(key1 = selectedTabIndex){
+    LaunchedEffect(key1 = selectedTabIndex) {
         pagerState.animateScrollToPage(selectedTabIndex)
     }
 
-    LaunchedEffect(key1 = pagerState.currentPage,pagerState.isScrollInProgress){
-        if (!pagerState.isScrollInProgress){
+    LaunchedEffect(key1 = pagerState.currentPage, pagerState.isScrollInProgress) {
+        if (!pagerState.isScrollInProgress) {
             selectedTabIndex = pagerState.currentPage
 
         }
     }
 
-    val ingredientState by recipeDetailViewModel.ingredientsStateFlow.collectAsState()
+    val recipeDetailState by recipeDetailViewModel.recipeDetailState.collectAsState()
 
     Box(modifier = modifier.fillMaxWidth()) {
 
@@ -70,17 +73,30 @@ fun RecipeDetailScreen(modifier: Modifier = Modifier,recipeDetailViewModel: Reci
             RecipeDetailTabTabRow(selectedIndex = selectedTabIndex, tabs = tabs, onTabSelected = {
                 selectedTabIndex = it
             })
-            HorizontalPager(
-                state = pagerState, modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-            ) { index ->
-                when(index){
-                    0 -> OverviewContent()
-                    1 -> IngredientsContent(ingredientList = ingredientState ?: listOf())
-                    2 -> InstructionContent()
+
+            if (recipeDetailState is Resource.Loading) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
+                    )
                 }
             }
+
+            if (recipeDetailState is Resource.Content) {
+                val state = recipeDetailState as Resource.Content
+                HorizontalPager(
+                    state = pagerState, modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    verticalAlignment = Alignment.Top
+                ) { index ->
+                    when (index) {
+                        0 -> OverviewContent(recipeEntity = state.data)
+                        1 -> IngredientsContent(ingredientList = state.data.ingredients)
+                    }
+                }
+            }
+
         }
     }
 }
