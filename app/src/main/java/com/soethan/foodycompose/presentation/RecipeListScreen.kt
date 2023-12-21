@@ -30,6 +30,8 @@ import com.soethan.foodycompose.utils.ShimmerList
 fun RecipeListScreen(
     modifier: Modifier = Modifier,
     recipeListViewModel: RecipeListViewModel = hiltViewModel(),
+    onNavigateToDetail: (Int) -> Unit
+
 ) {
 
     val recipeListState by recipeListViewModel.recipeListStateFlow.collectAsStateWithLifecycle()
@@ -42,7 +44,11 @@ fun RecipeListScreen(
 
         when (recipeListState) {
             is Resource.Loading -> ShimmerList(length = 10)
-            is Resource.Content -> RecipeContent(data = (recipeListState as Resource.Content<List<RecipeEntity>>).data)
+            is Resource.Content -> RecipeContent(
+                data = (recipeListState as Resource.Content<List<RecipeEntity>>).data,
+                onNavigateToDetail = onNavigateToDetail
+            )
+
             else -> Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(text = "No Data")
             }
@@ -56,7 +62,8 @@ fun RecipeListScreen(
 fun RecipeContent(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-    data: List<RecipeEntity>
+    data: List<RecipeEntity>,
+    onNavigateToDetail: (Int) -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
@@ -65,7 +72,9 @@ fun RecipeContent(
 
     ) {
         items(data.size) {
-            RecipeCardItem(recipeEntity = data[it])
+            RecipeCardItem(recipeEntity = data[it], onNavigateToDetail = {
+                onNavigateToDetail(data[it].id)
+            })
         }
     }
 }

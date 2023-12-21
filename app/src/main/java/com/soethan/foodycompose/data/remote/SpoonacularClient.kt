@@ -65,7 +65,7 @@ class SpoonacularClient @Inject constructor() {
     suspend fun getRecipeDetail(id: String): RecipeDto {
         return httpClient.get("/recipes") {
             url {
-                appendPathSegments("716429", "information")
+                appendPathSegments(id, "information")
                 parameter("apiKey", BuildConfig.API_KEY)
 
             }

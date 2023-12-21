@@ -19,9 +19,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.soethan.foodycompose.R
 import com.soethan.foodycompose.domain.models.RecipeEntity
 
@@ -33,7 +35,8 @@ fun RecipeDetailBackDrop(modifier: Modifier = Modifier, recipeEntity: RecipeEnti
             .height(250.dp)
     ) {
         AsyncImage(
-            model = recipeEntity!!.image,
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(recipeEntity!!.image).crossfade(true).build(),
             contentDescription = recipeEntity.title,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.fillMaxSize()

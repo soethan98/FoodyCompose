@@ -1,6 +1,7 @@
 package com.soethan.foodycompose.presentation.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,14 +45,17 @@ import com.soethan.foodycompose.utils.toAnnotatedString
 import kotlin.math.roundToInt
 
 @Composable
-fun RecipeCardItem(modifier: Modifier = Modifier, recipeEntity: RecipeEntity) {
+fun RecipeCardItem(
+    modifier: Modifier = Modifier, recipeEntity: RecipeEntity, onNavigateToDetail: () -> Unit
+) {
     Card(
 
         modifier = modifier
             .fillMaxWidth()
-            .clip(
-                RoundedCornerShape(16.dp),
-            ),
+            .clip(RoundedCornerShape(16.dp),)
+            .clickable {
+                onNavigateToDetail()
+            },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 0.dp
         )

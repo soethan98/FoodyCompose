@@ -77,8 +77,9 @@ fun NavGraphBuilder.recipeListScreen(
             activity?.finish()
 
         }
-        RecipeListScreen(
-        )
+        RecipeListScreen {
+            navController.navigate(Screens.RecipeDetail.passRecipeId(it.toString()))
+        }
     }
 }
 
@@ -111,9 +112,7 @@ fun NavGraphBuilder.foodJokeScreen(
         exitTransition = { fadeOut(animationSpec = tween(200)) }
     ) {
         bottomBarState.value = true
-        FoodJokeScreen {
-            navController.navigate(Screens.RecipeDetail.passRecipeId("123"))
-        }
+        FoodJokeScreen()
     }
 }
 

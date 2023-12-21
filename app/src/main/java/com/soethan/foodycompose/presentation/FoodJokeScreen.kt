@@ -35,7 +35,6 @@ import com.soethan.foodycompose.utils.Resource
 fun FoodJokeScreen(
     modifier: Modifier = Modifier,
     foodJokeViewModel: FoodJokeViewModel = hiltViewModel(),
-    onNavigateToDetail: () -> Unit
 ) {
     val result by foodJokeViewModel.randomJokeState.collectAsStateWithLifecycle()
     Box(
@@ -62,9 +61,7 @@ fun FoodJokeScreen(
                         modifier = Modifier
                             .padding(start = 24.dp, end = 24.dp)
                             .clip(RoundedCornerShape(6.dp))
-                            .clickable {
-                                onNavigateToDetail()
-                            },
+                            ,
                         border = BorderStroke(width = 1.dp, color = Color.Gray.copy(alpha = 0.5f))
 
                     ) {
