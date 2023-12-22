@@ -1,5 +1,6 @@
 package com.soethan.foodycompose.data.repository
 
+import com.soethan.foodycompose.data.models.toRecipeEntity
 import com.soethan.foodycompose.domain.models.IngredientEntity
 import com.soethan.foodycompose.domain.models.RecipeEntity
 import com.soethan.foodycompose.domain.repo.FoodRepo
@@ -11,38 +12,7 @@ class FoodRepositoryImpl @Inject constructor(private val foodRemoteDataSource: F
     FoodRepo {
     override suspend fun getRandomRecipes(): List<RecipeEntity> {
 
-        return foodRemoteDataSource.getRandomRecipes().map { it ->
-            RecipeEntity(
-                id = it.id,
-                title = it.title ?: "",
-                summary = it.summary ?: "",
-                image = it.image ?: "",
-                healthScore = it.healthScore,
-                vegan = it.vegan,
-                veryHealthy = it.veryHealthy,
-                vegetarian = it.vegetarian,
-                cheap = it.cheap,
-                glutenFree = it.glutenFree,
-                dairyFree = it.dairyFree,
-                readyInMinutes = it.readyInMinutes,
-                ingredients = it.ingredients.map { a ->
-                    IngredientEntity(
-                        aisle = a.aisle,
-                        amount = a.amount,
-                        consistency = a.consistency,
-                        id = a.id,
-                        image = a.image,
-                        name = a.name,
-                        original = a.original,
-                        originalName = a.originalName,
-                        unit = a.unit,
-
-
-                        )
-                },
-
-                )
-        }
+        return foodRemoteDataSource.getRandomRecipes().map { it.toRecipeEntity() }
     }
 
     override suspend fun getRandomJoke(): Flow<String> {
@@ -54,36 +24,8 @@ class FoodRepositoryImpl @Inject constructor(private val foodRemoteDataSource: F
 
     override suspend fun getRecipeInformation(id: String): RecipeEntity {
         val it = foodRemoteDataSource.getRecipeDetail(id)
-        return RecipeEntity(
-            id = it.id,
-            title = it.title ?: "",
-            summary = it.summary ?: "",
-            image = it.image ?: "",
+        return it.toRecipeEntity()
 
-            healthScore = it.healthScore,
-            vegan = it.vegan,
-            veryHealthy = it.veryHealthy,
-            vegetarian = it.vegetarian,
-            cheap = it.cheap,
-            glutenFree = it.glutenFree,
-            dairyFree = it.dairyFree,
-            readyInMinutes = it.readyInMinutes,
-            ingredients = it.ingredients.map { a ->
-                IngredientEntity(
-                    aisle = a.aisle,
-                    amount = a.amount,
-                    consistency = a.consistency,
-                    id = a.id,
-                    image = a.image,
-                    name = a.name,
-                    original = a.original,
-                    originalName = a.originalName,
-                    unit = a.unit
-
-
-                )
-            }
-        )
     }
 
 }

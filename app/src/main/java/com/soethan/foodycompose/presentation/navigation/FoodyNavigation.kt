@@ -129,6 +129,10 @@ fun NavGraphBuilder.recipeDetailScreen(
     ) {
         bottomBarState.value = false
 
-        RecipeDetailScreen()
+        RecipeDetailScreen(
+            onPopPage = {
+                navController.navigateUp()
+            }
+        )
     }
 }

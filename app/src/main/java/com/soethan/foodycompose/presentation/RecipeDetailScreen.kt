@@ -8,8 +8,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -38,7 +42,8 @@ import com.soethan.foodycompose.utils.Resource
 @Composable
 fun RecipeDetailScreen(
     modifier: Modifier = Modifier,
-    recipeDetailViewModel: RecipeDetailViewModel = hiltViewModel()
+    recipeDetailViewModel: RecipeDetailViewModel = hiltViewModel(),
+    onPopPage: () -> Unit
 ) {
     val tabs = listOf(
         stringResource(id = R.string.overview),
@@ -69,7 +74,7 @@ fun RecipeDetailScreen(
     Box(modifier = modifier.fillMaxWidth()) {
 
         Column {
-            HeaderTitle()
+            HeaderTitle(onPopPage)
             RecipeDetailTabTabRow(selectedIndex = selectedTabIndex, tabs = tabs, onTabSelected = {
                 selectedTabIndex = it
             })
@@ -104,7 +109,10 @@ fun RecipeDetailScreen(
 
 @ExperimentalMaterial3Api
 @Composable
-fun HeaderTitle() {
+fun HeaderTitle(
+    onPopPage: () -> Unit
+
+) {
 
     TopAppBar(title = {
         Text(
@@ -112,6 +120,12 @@ fun HeaderTitle() {
             textAlign = TextAlign.Start,
 
             )
+    }, navigationIcon = {
+        IconButton(
+            onClick = onPopPage,
+        ) {
+            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "")
+        }
     })
 
 }

@@ -1,5 +1,6 @@
 package com.soethan.foodycompose.data.models
 
+import com.soethan.foodycompose.domain.models.RecipeEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -24,3 +25,20 @@ data class RecipeDto(
 )
 
 
+fun RecipeDto.toRecipeEntity():RecipeEntity {
+   return RecipeEntity(
+        id = this.id,
+        cheap = this.cheap ?: false,
+        title = this.title ?: "",
+        image = this.image ?: "",
+        summary = this.summary ?: "",
+        vegan = this.vegan,
+        vegetarian = this.vegetarian,
+        veryHealthy = this.veryHealthy,
+        glutenFree = this.glutenFree,
+        dairyFree = this.dairyFree,
+        healthScore = this.healthScore ?: 0.0,
+        readyInMinutes = this.readyInMinutes,
+        ingredients = this.ingredients.map{ it.toIngredientEntity() }
+    )
+}

@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,6 +30,7 @@ import com.soethan.foodycompose.presentation.RecipeType
 import com.soethan.foodycompose.utils.parseHTMLSpanned
 import com.soethan.foodycompose.utils.toAnnotatedString
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun RecipeDetailContent(modifier: Modifier = Modifier, recipeEntity: RecipeEntity? = null) {
 
@@ -76,15 +79,11 @@ fun RecipeDetailContent(modifier: Modifier = Modifier, recipeEntity: RecipeEntit
         )
         Spacer(modifier = Modifier.height(12.dp))
 
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-
-            modifier = Modifier
-                .fillMaxWidth()
-
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            recipeTypes.take(3).forEach {
+            recipeTypes.forEach{
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -104,34 +103,12 @@ fun RecipeDetailContent(modifier: Modifier = Modifier, recipeEntity: RecipeEntit
                 }
             }
         }
+
         Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            recipeTypes.takeLast(3).forEach {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_checkmark),
-                        tint = if (it.isMet) Color.Green else Color.Black,
-                        contentDescription = "${it.title}"
-                    )
 
-                    Text(
-                        text = it.title, style = TextStyle(
-                            fontSize = 14.sp
-                        )
-                    )
-
-                }
-            }
-        }
-        Spacer(modifier = Modifier.padding(start = 16.dp, end = 16.dp))
+        Spacer(modifier = Modifier
+            .padding(start = 16.dp, end = 16.dp)
+            .height(12.dp))
         Text(text = recipeEntity.summary?.parseHTMLSpanned()!!.toAnnotatedString())
 
 

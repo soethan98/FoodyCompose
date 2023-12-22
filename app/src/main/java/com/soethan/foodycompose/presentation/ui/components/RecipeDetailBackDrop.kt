@@ -42,7 +42,7 @@ fun RecipeDetailBackDrop(modifier: Modifier = Modifier, recipeEntity: RecipeEnti
             modifier = Modifier.fillMaxSize()
         )
         Row(
-            modifier = Modifier.align(Alignment.BottomEnd),
+            modifier = Modifier.align(Alignment.BottomEnd).padding(end = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {

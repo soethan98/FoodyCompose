@@ -15,3 +15,6 @@ data class RecipeEntity(
     val healthScore: Double,
     val ingredients: List<IngredientEntity>
 )
+
+
+
