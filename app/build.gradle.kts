@@ -113,6 +113,10 @@ dependencies {
     // Splash screen API
     implementation("androidx.core:core-splashscreen:1.0.1")
 
+    /// Custom Tabs
+    implementation("androidx.browser:browser:1.7.0")
+
+
 
 }
 

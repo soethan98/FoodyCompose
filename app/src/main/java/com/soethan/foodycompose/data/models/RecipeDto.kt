@@ -39,6 +39,7 @@ fun RecipeDto.toRecipeEntity():RecipeEntity {
         dairyFree = this.dairyFree,
         healthScore = this.healthScore ?: 0.0,
         readyInMinutes = this.readyInMinutes,
+       sourceUrl = this.sourceUrl,
         ingredients = this.ingredients.map{ it.toIngredientEntity() }
     )
 }

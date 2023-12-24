@@ -13,6 +13,7 @@ data class RecipeEntity(
     val cheap: Boolean,
     val readyInMinutes: Int,
     val healthScore: Double,
+    val sourceUrl:String,
     val ingredients: List<IngredientEntity>
 )
 
