@@ -1,23 +1,14 @@
-package com.soethan.foodycompose.presentation
+package com.soethan.foodycompose.presentation.ui.screens.details
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -27,15 +18,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.soethan.foodycompose.R
-import com.soethan.foodycompose.presentation.ui.IngredientsContent
-import com.soethan.foodycompose.presentation.ui.OverviewContent
-import com.soethan.foodycompose.presentation.ui.components.RecipeDetailTabTabRow
+import com.soethan.foodycompose.presentation.components.HeaderTitle
+import com.soethan.foodycompose.presentation.viewmodels.RecipeDetailViewModel
+import com.soethan.foodycompose.presentation.components.RecipeDetailTabTabRow
 import com.soethan.foodycompose.utils.Resource
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -107,25 +95,3 @@ fun RecipeDetailScreen(
 }
 
 
-@ExperimentalMaterial3Api
-@Composable
-fun HeaderTitle(
-    onPopPage: () -> Unit
-
-) {
-
-    TopAppBar(title = {
-        Text(
-            text = "Details",
-            textAlign = TextAlign.Start,
-
-            )
-    }, navigationIcon = {
-        IconButton(
-            onClick = onPopPage,
-        ) {
-            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "")
-        }
-    })
-
-}

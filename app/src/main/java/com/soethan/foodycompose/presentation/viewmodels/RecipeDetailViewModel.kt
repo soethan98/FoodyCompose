@@ -1,4 +1,4 @@
-package com.soethan.foodycompose.presentation
+package com.soethan.foodycompose.presentation.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle

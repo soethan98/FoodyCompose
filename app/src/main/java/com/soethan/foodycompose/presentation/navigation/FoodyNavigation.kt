@@ -16,16 +16,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.Navigation
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.soethan.foodycompose.presentation.FavoriteListScreen
-import com.soethan.foodycompose.presentation.FoodJokeScreen
-import com.soethan.foodycompose.presentation.RecipeDetailScreen
-import com.soethan.foodycompose.presentation.RecipeListScreen
-import com.soethan.foodycompose.utils.Constants
+import com.soethan.foodycompose.presentation.ui.screens.FavoriteListScreen
+import com.soethan.foodycompose.presentation.ui.screens.FoodJokeScreen
+import com.soethan.foodycompose.presentation.ui.screens.details.RecipeDetailScreen
+import com.soethan.foodycompose.presentation.ui.screens.RecipeListScreen
 
 @Composable
 fun FoodyNavigation(
@@ -38,7 +35,7 @@ fun FoodyNavigation(
     NavHost(
         navController = navController,
         startDestination = Screens.RecipeList.route,
-//        modifier = Modifier.padding(bottomBarPadding)
+        modifier = Modifier.padding(bottomBarPadding)
     ) {
 
 

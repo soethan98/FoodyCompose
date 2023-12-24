@@ -1,6 +1,5 @@
-package com.soethan.foodycompose.presentation.ui.components
+package com.soethan.foodycompose.presentation.components
 
-import android.content.Context
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.clickable
@@ -27,10 +26,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.soethan.foodycompose.MainActivity
 import com.soethan.foodycompose.R
 import com.soethan.foodycompose.domain.models.RecipeEntity
-import com.soethan.foodycompose.presentation.RecipeType
+import com.soethan.foodycompose.presentation.viewmodels.RecipeType
 import com.soethan.foodycompose.utils.parseHTMLSpanned
 import com.soethan.foodycompose.utils.toAnnotatedString
 

@@ -1,4 +1,4 @@
-package com.soethan.foodycompose.presentation
+package com.soethan.foodycompose.presentation.viewmodels
 
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
