@@ -2,6 +2,7 @@ package com.soethan.foodycompose.presentation.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,8 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.soethan.foodycompose.domain.models.RecipeEntity
+import com.soethan.foodycompose.presentation.components.MainHeaderTitle
 import com.soethan.foodycompose.presentation.viewmodels.RecipeListViewModel
 import com.soethan.foodycompose.presentation.components.RecipeCardItem
+import com.soethan.foodycompose.presentation.components.SearchMenu
 import com.soethan.foodycompose.utils.Resource
 import com.soethan.foodycompose.utils.ShimmerList
 
@@ -26,8 +29,8 @@ import com.soethan.foodycompose.utils.ShimmerList
 fun RecipeListScreen(
     modifier: Modifier = Modifier,
     recipeListViewModel: RecipeListViewModel = hiltViewModel(),
-    onNavigateToDetail: (Int) -> Unit
-
+    onNavigateToDetail: (Int) -> Unit,
+    onNavigateToSearch: () -> Unit
 ) {
 
     val recipeListState by recipeListViewModel.recipeListStateFlow.collectAsStateWithLifecycle()
@@ -37,16 +40,23 @@ fun RecipeListScreen(
             .fillMaxSize()
     ) {
 
+        Column(verticalArrangement = Arrangement.Top) {
+            MainHeaderTitle(title = "Random", actionMenu = {
+                SearchMenu(onNavigateToSearch)
+            })
+            when (recipeListState) {
+                is Resource.Loading -> ShimmerList(length = 10)
+                is Resource.Content -> RecipeContent(
+                    data = (recipeListState as Resource.Content<List<RecipeEntity>>).data,
+                    onNavigateToDetail = onNavigateToDetail
+                )
 
-        when (recipeListState) {
-            is Resource.Loading -> ShimmerList(length = 10)
-            is Resource.Content -> RecipeContent(
-                data = (recipeListState as Resource.Content<List<RecipeEntity>>).data,
-                onNavigateToDetail = onNavigateToDetail
-            )
-
-            else -> Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = "No Data")
+                else -> Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = "No Data")
+                }
             }
         }
     }

@@ -9,6 +9,7 @@
     <string name="overview">Overview</string>
     <string name="instruction">Instruction</string>
     <string name="ingredients">Ingredients</string>
+    <string name="details">Details</string>
 
     // Bottom Sheet
     <string name="meal_type">Meal Type</string>

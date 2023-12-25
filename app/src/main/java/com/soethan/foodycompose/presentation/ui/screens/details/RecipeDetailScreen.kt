@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.soethan.foodycompose.R
-import com.soethan.foodycompose.presentation.components.HeaderTitle
+import com.soethan.foodycompose.presentation.components.DetailHeaderTitle
 import com.soethan.foodycompose.presentation.viewmodels.RecipeDetailViewModel
 import com.soethan.foodycompose.presentation.components.RecipeDetailTabTabRow
 import com.soethan.foodycompose.utils.Resource
@@ -62,7 +62,7 @@ fun RecipeDetailScreen(
     Box(modifier = modifier.fillMaxWidth()) {
 
         Column {
-            HeaderTitle(onPopPage)
+            DetailHeaderTitle(onPopPage){}
             RecipeDetailTabTabRow(selectedIndex = selectedTabIndex, tabs = tabs, onTabSelected = {
                 selectedTabIndex = it
             })
