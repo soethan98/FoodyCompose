@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,10 +32,14 @@ fun RecipeListScreen(
     modifier: Modifier = Modifier,
     recipeListViewModel: RecipeListViewModel = hiltViewModel(),
     onNavigateToDetail: (Int) -> Unit,
-    onNavigateToSearch: () -> Unit
+    onNavigateToSearch: () -> Unit,
+    snackbarHostState: SnackbarHostState
 ) {
 
     val recipeListState by recipeListViewModel.recipeListStateFlow.collectAsStateWithLifecycle()
+    LaunchedEffect(key1 = recipeListState){
+
+    }
 
     Surface(
         modifier = modifier
@@ -55,7 +61,7 @@ fun RecipeListScreen(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "No Data")
+                    Text(text = recipeListState.toString())
                 }
             }
         }

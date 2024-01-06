@@ -29,21 +29,21 @@ class FoodJokeViewModel @Inject constructor(
 
 
     init {
-        loadJoke()
+     //   loadJoke()
     }
 
-    fun loadJoke() {
-        viewModelScope.launch {
-            _randomJokeState.value = Resource.Loading
-            try {
-                foodRepo.getRandomJoke().collectLatest {
-                    _randomJokeState.value = Resource.Content(it)
-                }
-            } catch (e: Exception) {
-                _randomJokeState.value = Resource.Error(e.message ?: "")
-            }
-        }
-    }
+//    fun loadJoke() {
+//        viewModelScope.launch {
+//            _randomJokeState.value = Resource.Loading
+//            try {
+//                foodRepo.getRandomJoke().collectLatest {
+//                    _randomJokeState.value = Resource.Content(it)
+//                }
+//            } catch (e: Exception) {
+//                _randomJokeState.value = Resource.Error(e.message ?: "")
+//            }
+//        }
+//    }
 
 
 

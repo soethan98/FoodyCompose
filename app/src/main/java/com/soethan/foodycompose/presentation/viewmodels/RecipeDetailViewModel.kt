@@ -32,21 +32,21 @@ class RecipeDetailViewModel @Inject constructor(
 
 
     init {
-        getRecipeInformation()
+        //getRecipeInformation()
     }
 
 
     fun getRecipeInformation() {
-        viewModelScope.launch {
-            try {
-                _recipeDetailState.value = Resource.Loading
-                val result = foodRepo.getRecipeInformation(recipeId)
-                _recipeDetailState.value = Resource.Content(result)
-
-            } catch (e: Exception) {
-                Log.d("RecipeDetailViewModel", "getRecipeInformation: ${e.message} ")
-            }
-        }
+//        viewModelScope.launch {
+//            try {
+//                _recipeDetailState.value = Resource.Loading
+//                val result = foodRepo.getRecipeInformation(recipeId)
+//                _recipeDetailState.value = Resource.Content(result)
+//
+//            } catch (e: Exception) {
+//                Log.d("RecipeDetailViewModel", "getRecipeInformation: ${e.message} ")
+//            }
+//        }
     }
 
 

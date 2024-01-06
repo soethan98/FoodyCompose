@@ -1,13 +1,15 @@
 package com.soethan.foodycompose.data.repository
 
+import com.skydoves.sandwich.ApiResponse
 import com.soethan.foodycompose.data.models.FoodJokeDto
+import com.soethan.foodycompose.data.models.FoodRecipeDto
 import com.soethan.foodycompose.data.models.RecipeDto
 
 interface FoodRemoteDataSource {
-    suspend fun getRandomRecipes(): List<RecipeDto>
-    suspend fun getRandomJokes(): FoodJokeDto
+    suspend fun getRandomRecipes(): ApiResponse<FoodRecipeDto>
+    suspend fun getRandomJokes(): ApiResponse<FoodJokeDto>
 
-    suspend fun getRecipeDetail(id:String): RecipeDto
+    suspend fun getRecipeDetail(id:String): ApiResponse<RecipeDto>
 }
 
 

@@ -117,6 +117,9 @@ dependencies {
     implementation("androidx.browser:browser:1.7.0")
 
 
+    implementation("com.github.skydoves:sandwich-ktor:2.0.5")
+
+
 
 }
 

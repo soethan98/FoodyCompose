@@ -8,6 +8,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
@@ -29,7 +30,8 @@ fun FoodyNavigation(
     navController: NavHostController,
     startDestination: String,
     bottomBarPadding: PaddingValues,
-    bottomBarState: MutableState<Boolean>
+    bottomBarState: MutableState<Boolean>,
+    snackbarState: SnackbarHostState
 ) {
 
     NavHost(
@@ -42,7 +44,8 @@ fun FoodyNavigation(
         recipeListScreen(
             navController,
             bottomBarState = bottomBarState,
-            bottomBarPadding = bottomBarPadding
+            bottomBarPadding = bottomBarPadding,
+            snackbarState = snackbarState
         )
         favoriteListScreen(
             navController,
@@ -64,8 +67,10 @@ fun FoodyNavigation(
 
 @OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.recipeListScreen(
-    navController: NavController, bottomBarPadding: PaddingValues,
-    bottomBarState: MutableState<Boolean>
+    navController: NavController,
+    bottomBarPadding: PaddingValues,
+    bottomBarState: MutableState<Boolean>,
+    snackbarState: SnackbarHostState
 ) {
     composable(route = Screens.RecipeList.route) {
         bottomBarState.value = true
@@ -77,7 +82,7 @@ fun NavGraphBuilder.recipeListScreen(
         RecipeListScreen(onNavigateToDetail = {
             navController.navigate(Screens.RecipeDetail.passRecipeId(it.toString()))
 
-        }, onNavigateToSearch = {})
+        }, onNavigateToSearch = {}, snackbarHostState = snackbarState)
     }
 }
 

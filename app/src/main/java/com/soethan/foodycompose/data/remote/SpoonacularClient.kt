@@ -1,5 +1,7 @@
 package com.soethan.foodycompose.data.remote
 
+import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.ktor.getApiResponse
 import com.soethan.foodycompose.BuildConfig
 import com.soethan.foodycompose.data.models.FoodJokeDto
 import com.soethan.foodycompose.data.models.FoodRecipeDto
@@ -47,30 +49,28 @@ class SpoonacularClient @Inject constructor() {
     }
 
 
-    suspend fun getRandomRecipes(): FoodRecipeDto {
-        return httpClient.get(RANDOM_RECIPES_URL) {
+    suspend fun getRandomRecipes(): ApiResponse<FoodRecipeDto> {
+        return httpClient.getApiResponse<FoodRecipeDto>(RANDOM_RECIPES_URL) {
             parameter("number", "20")
             parameter("apiKey", BuildConfig.API_KEY)
-
-        }.body()
-
+        }
     }
 
-    suspend fun getRandomFoodJoke(): FoodJokeDto {
-        return httpClient.get(RANDOM_FOOD_JOKE) {
+    suspend fun getRandomFoodJoke(): ApiResponse<FoodJokeDto> {
+        return httpClient.getApiResponse<FoodJokeDto>(RANDOM_FOOD_JOKE) {
             parameter("apiKey", BuildConfig.API_KEY)
-        }.body()
+        }
     }
 
-    suspend fun getRecipeDetail(id: String): RecipeDto {
-        return httpClient.get("/recipes") {
+    suspend fun getRecipeDetail(id: String): ApiResponse<RecipeDto> {
+        return httpClient.getApiResponse<RecipeDto>("/recipes") {
             url {
                 appendPathSegments(id, "information")
                 parameter("apiKey", BuildConfig.API_KEY)
 
             }
 
-        }.body()
+        }
     }
 
 }
