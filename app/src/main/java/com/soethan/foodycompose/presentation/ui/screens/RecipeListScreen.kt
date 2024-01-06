@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -25,6 +26,8 @@ import com.soethan.foodycompose.presentation.components.RecipeCardItem
 import com.soethan.foodycompose.presentation.components.SearchMenu
 import com.soethan.foodycompose.utils.Resource
 import com.soethan.foodycompose.utils.ShimmerList
+import com.soethan.foodycompose.utils.onError
+import kotlinx.coroutines.launch
 
 @Composable
 @ExperimentalMaterial3Api
@@ -36,9 +39,15 @@ fun RecipeListScreen(
     snackbarHostState: SnackbarHostState
 ) {
 
-    val recipeListState by recipeListViewModel.recipeListStateFlow.collectAsStateWithLifecycle()
-    LaunchedEffect(key1 = recipeListState){
+    val scope = rememberCoroutineScope()
 
+    val recipeListState by recipeListViewModel.recipeListStateFlow.collectAsStateWithLifecycle()
+    LaunchedEffect(key1 = recipeListState) {
+        recipeListState.onError { message ->
+            scope.launch {
+                snackbarHostState.showSnackbar(message)
+            }
+        }
     }
 
     Surface(
@@ -57,12 +66,7 @@ fun RecipeListScreen(
                     onNavigateToDetail = onNavigateToDetail
                 )
 
-                else -> Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = recipeListState.toString())
-                }
+                else -> Unit
             }
         }
     }

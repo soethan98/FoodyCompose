@@ -10,10 +10,13 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,6 +36,8 @@ import com.soethan.foodycompose.presentation.viewmodels.FoodJokeViewModel
 import com.soethan.foodycompose.presentation.ui.theme.fontFamily
 import com.soethan.foodycompose.presentation.viewmodels.MainViewModel
 import com.soethan.foodycompose.utils.Resource
+import com.soethan.foodycompose.utils.onError
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,11 +45,22 @@ fun FoodJokeScreen(
     modifier: Modifier = Modifier,
     foodJokeViewModel: FoodJokeViewModel = hiltViewModel(),
     mainViewModel: MainViewModel = hiltViewModel(),
-
+    snackbarHostState: SnackbarHostState,
     onNavigateToSearch: () -> Unit
 ) {
     val result by foodJokeViewModel.randomJokeState.collectAsStateWithLifecycle()
     val appThemeMode by mainViewModel.appThemeState.collectAsState()
+
+
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = result) {
+        result.onError { message ->
+            scope.launch {
+                snackbarHostState.showSnackbar(message)
+            }
+        }
+    }
     Box(
         modifier = modifier
             .fillMaxSize()

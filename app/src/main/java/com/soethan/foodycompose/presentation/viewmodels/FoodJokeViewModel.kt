@@ -3,7 +3,11 @@ package com.soethan.foodycompose.presentation.viewmodels
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.soethan.foodycompose.domain.DataState
 import com.soethan.foodycompose.domain.models.RecipeEntity
+import com.soethan.foodycompose.domain.onError
+import com.soethan.foodycompose.domain.onException
+import com.soethan.foodycompose.domain.onSuccess
 import com.soethan.foodycompose.domain.repo.FoodRepo
 import com.soethan.foodycompose.domain.repo.UserSettingRepo
 import com.soethan.foodycompose.utils.AppTheme
@@ -27,24 +31,30 @@ class FoodJokeViewModel @Inject constructor(
         get() = _randomJokeState
 
 
-
     init {
-     //   loadJoke()
+        loadJoke()
     }
 
-//    fun loadJoke() {
-//        viewModelScope.launch {
-//            _randomJokeState.value = Resource.Loading
-//            try {
-//                foodRepo.getRandomJoke().collectLatest {
-//                    _randomJokeState.value = Resource.Content(it)
-//                }
-//            } catch (e: Exception) {
-//                _randomJokeState.value = Resource.Error(e.message ?: "")
-//            }
-//        }
-//    }
+    private fun loadJoke() {
+        viewModelScope.launch {
+            _randomJokeState.value = Resource.Loading
+            foodRepo.getRandomJoke().collectLatest { dataState: DataState<String> ->
+                dataState.onSuccess {
+                    _randomJokeState.value = Resource.Content(it)
+                }
+                    .onError { code, message ->
+                        _randomJokeState.value =
+                            Resource.Error(message = message ?: "Error Happened")
 
+                    }.onException { e ->
+                        _randomJokeState.value =
+                            Resource.Error(message = e.message ?: "Error Happened")
+
+                    }
+            }
+
+        }
+    }
 
 
 }

@@ -19,35 +19,52 @@ class FoodRepositoryImpl @Inject constructor(private val foodRemoteDataSource: F
     FoodRepo {
 
     override suspend fun getRandomRecipes(): Flow<DataState<List<RecipeEntity>>> {
-      return  flow {
+        return flow {
             val response = foodRemoteDataSource.getRandomRecipes()
             response.suspendOnSuccess {
-               val mappedData =  this.data.recipes.map { it.toRecipeEntity() }
+                val mappedData = this.data.recipes.map { it.toRecipeEntity() }
                 emit(DataState.Success(mappedData))
             }.suspendOnError {
-              suspendMap (ErrorResponseMapper){
-                   emit(DataState.Error(message,code))               }
+                suspendMap(ErrorResponseMapper) {
+                    emit(DataState.Error(message, code))
+                }
             }.suspendOnException {
                 emit(DataState.Exception(throwable))
             }
         }
     }
-//    override suspend fun getRandomRecipes(): List<RecipeEntity> {
-//
-//        return foodRemoteDataSource.getRandomRecipes().map { it.toRecipeEntity() }
-//    }
-//
-//    override suspend fun getRandomJoke(): Flow<String> {
-//        return flow<String> {
-//            val result = foodRemoteDataSource.getRandomJokes()
-//            emit(result.text)
-//        }
-//    }
-//
-//    override suspend fun getRecipeInformation(id: String): RecipeEntity {
-//        val it = foodRemoteDataSource.getRecipeDetail(id)
-//        return it.toRecipeEntity()
-//
-//    }
+
+
+    override suspend fun getRandomJoke(): Flow<DataState<String>> {
+        return flow {
+            val result = foodRemoteDataSource.getRandomJokes()
+            result.suspendOnSuccess {
+                emit(DataState.Success(data.text))
+            }.suspendOnError {
+                suspendMap(ErrorResponseMapper) {
+                    emit(DataState.Error(message, code))
+                }
+            }.suspendOnException {
+                emit(DataState.Exception(throwable))
+            }
+        }
+    }
+
+    override suspend fun getRecipeInformation(id: String): Flow<DataState<RecipeEntity>> {
+        return flow {
+            val result = foodRemoteDataSource.getRecipeDetail(id)
+            result.suspendOnSuccess {
+                emit(DataState.Success(data.toRecipeEntity()))
+            }.suspendOnError {
+                suspendMap(ErrorResponseMapper) {
+                    emit(DataState.Error(message, code))
+                }
+            }.suspendOnException {
+                emit(DataState.Exception(throwable))
+            }
+        }
+    }
+
+
 
 }

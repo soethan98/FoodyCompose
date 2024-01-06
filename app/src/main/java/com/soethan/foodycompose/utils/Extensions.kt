@@ -54,3 +54,10 @@ fun String.parseHTMLSpanned(): Spanned {
     return HtmlCompat.fromHtml(spannableString, HtmlCompat.FROM_HTML_MODE_COMPACT)
 
 }
+
+
+fun <T : Any> Resource<T>.onError(onError: (String) -> Unit) {
+    if (this is Resource.Error) {
+        onError(message)
+    }
+}

@@ -9,7 +9,6 @@ interface FoodRepo {
     suspend fun getRandomRecipes(): Flow<DataState<List<RecipeEntity>>>
 
 
-//    suspend fun getRandomJoke(): Flow<String>
-//
-//    suspend fun getRecipeInformation(id: String): RecipeEntity
+    suspend fun getRandomJoke(): Flow<DataState<String>>
+    suspend fun getRecipeInformation(id: String): Flow<DataState<RecipeEntity>>
 }

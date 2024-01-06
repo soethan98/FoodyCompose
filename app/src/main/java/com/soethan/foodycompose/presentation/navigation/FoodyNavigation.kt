@@ -55,7 +55,8 @@ fun FoodyNavigation(
         foodJokeScreen(
             navController,
             bottomBarState = bottomBarState,
-            bottomBarPadding = bottomBarPadding
+            bottomBarPadding = bottomBarPadding,
+            snackbarState = snackbarState
         )
         recipeDetailScreen(
             navController,
@@ -106,7 +107,8 @@ fun NavGraphBuilder.favoriteListScreen(
 fun NavGraphBuilder.foodJokeScreen(
     navController: NavController,
     bottomBarPadding: PaddingValues,
-    bottomBarState: MutableState<Boolean>
+    bottomBarState: MutableState<Boolean>,
+    snackbarState: SnackbarHostState
 ) {
     composable(route = Screens.FoodJoke.route, enterTransition = {
         fadeIn(animationSpec = tween(200))
@@ -115,7 +117,7 @@ fun NavGraphBuilder.foodJokeScreen(
         exitTransition = { fadeOut(animationSpec = tween(200)) }
     ) {
         bottomBarState.value = true
-        FoodJokeScreen(onNavigateToSearch = {})
+        FoodJokeScreen(onNavigateToSearch = {}, snackbarHostState = snackbarState)
     }
 }
 
