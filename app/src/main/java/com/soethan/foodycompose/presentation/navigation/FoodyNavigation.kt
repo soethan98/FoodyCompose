@@ -31,7 +31,6 @@ fun FoodyNavigation(
     startDestination: String,
     bottomBarPadding: PaddingValues,
     bottomBarState: MutableState<Boolean>,
-    snackbarState: SnackbarHostState
 ) {
 
     NavHost(
@@ -44,9 +43,7 @@ fun FoodyNavigation(
         recipeListScreen(
             navController,
             bottomBarState = bottomBarState,
-            bottomBarPadding = bottomBarPadding,
-            snackbarState = snackbarState
-        )
+            bottomBarPadding = bottomBarPadding,)
         favoriteListScreen(
             navController,
             bottomBarState = bottomBarState,
@@ -56,7 +53,6 @@ fun FoodyNavigation(
             navController,
             bottomBarState = bottomBarState,
             bottomBarPadding = bottomBarPadding,
-            snackbarState = snackbarState
         )
         recipeDetailScreen(
             navController,
@@ -71,7 +67,6 @@ fun NavGraphBuilder.recipeListScreen(
     navController: NavController,
     bottomBarPadding: PaddingValues,
     bottomBarState: MutableState<Boolean>,
-    snackbarState: SnackbarHostState
 ) {
     composable(route = Screens.RecipeList.route) {
         bottomBarState.value = true
@@ -83,7 +78,7 @@ fun NavGraphBuilder.recipeListScreen(
         RecipeListScreen(onNavigateToDetail = {
             navController.navigate(Screens.RecipeDetail.passRecipeId(it.toString()))
 
-        }, onNavigateToSearch = {}, snackbarHostState = snackbarState)
+        }, onNavigateToSearch = {})
     }
 }
 
@@ -108,7 +103,6 @@ fun NavGraphBuilder.foodJokeScreen(
     navController: NavController,
     bottomBarPadding: PaddingValues,
     bottomBarState: MutableState<Boolean>,
-    snackbarState: SnackbarHostState
 ) {
     composable(route = Screens.FoodJoke.route, enterTransition = {
         fadeIn(animationSpec = tween(200))
@@ -117,7 +111,7 @@ fun NavGraphBuilder.foodJokeScreen(
         exitTransition = { fadeOut(animationSpec = tween(200)) }
     ) {
         bottomBarState.value = true
-        FoodJokeScreen(onNavigateToSearch = {}, snackbarHostState = snackbarState)
+        FoodJokeScreen(onNavigateToSearch = {})
     }
 }
 

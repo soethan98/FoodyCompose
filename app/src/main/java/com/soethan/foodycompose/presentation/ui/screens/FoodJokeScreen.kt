@@ -32,6 +32,7 @@ import com.soethan.foodycompose.R
 import com.soethan.foodycompose.presentation.components.MainHeaderTitle
 import com.soethan.foodycompose.presentation.components.ThemeChooserDropDown
 import com.soethan.foodycompose.presentation.components.ThemeSwitcherMenu
+import com.soethan.foodycompose.presentation.ui.LocalSnackBarHostState
 import com.soethan.foodycompose.presentation.viewmodels.FoodJokeViewModel
 import com.soethan.foodycompose.presentation.ui.theme.fontFamily
 import com.soethan.foodycompose.presentation.viewmodels.MainViewModel
@@ -45,11 +46,11 @@ fun FoodJokeScreen(
     modifier: Modifier = Modifier,
     foodJokeViewModel: FoodJokeViewModel = hiltViewModel(),
     mainViewModel: MainViewModel = hiltViewModel(),
-    snackbarHostState: SnackbarHostState,
     onNavigateToSearch: () -> Unit
 ) {
     val result by foodJokeViewModel.randomJokeState.collectAsStateWithLifecycle()
     val appThemeMode by mainViewModel.appThemeState.collectAsState()
+    val snackbarHostState = LocalSnackBarHostState.current
 
 
     val scope = rememberCoroutineScope()

@@ -24,6 +24,7 @@ import com.soethan.foodycompose.presentation.components.MainHeaderTitle
 import com.soethan.foodycompose.presentation.viewmodels.RecipeListViewModel
 import com.soethan.foodycompose.presentation.components.RecipeCardItem
 import com.soethan.foodycompose.presentation.components.SearchMenu
+import com.soethan.foodycompose.presentation.ui.LocalSnackBarHostState
 import com.soethan.foodycompose.utils.Resource
 import com.soethan.foodycompose.utils.ShimmerList
 import com.soethan.foodycompose.utils.onError
@@ -36,10 +37,10 @@ fun RecipeListScreen(
     recipeListViewModel: RecipeListViewModel = hiltViewModel(),
     onNavigateToDetail: (Int) -> Unit,
     onNavigateToSearch: () -> Unit,
-    snackbarHostState: SnackbarHostState
 ) {
 
     val scope = rememberCoroutineScope()
+    val snackbarHostState = LocalSnackBarHostState.current;
 
     val recipeListState by recipeListViewModel.recipeListStateFlow.collectAsStateWithLifecycle()
     LaunchedEffect(key1 = recipeListState) {
