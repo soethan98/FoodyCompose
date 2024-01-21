@@ -1,3 +1,4 @@
+import org.gradle.internal.impldep.com.jcraft.jsch.ConfigRepository.defaultConfig
 
 plugins {
     id("com.android.application")
@@ -5,6 +6,7 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("kotlinx-serialization")
+
 }
 
 
@@ -49,7 +51,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.0"
     }
     packaging {
         resources {
@@ -77,8 +79,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     /// Dagger Hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-android-compiler:2.50")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
     /// Ktor
@@ -116,10 +118,12 @@ dependencies {
     /// Custom Tabs
     implementation("androidx.browser:browser:1.7.0")
 
-
+    /// Error handling
     implementation("com.github.skydoves:sandwich-ktor:2.0.5")
 
-
+    /// Db
+//    implementation("app.cash.sqldelight:android-driver:2.0.1")
+    implementation("app.cash.sqldelight:android-driver:2.0.0")
 
 }
 
