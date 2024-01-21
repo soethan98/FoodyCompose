@@ -1,0 +1,17 @@
+CREATE TABLE foodEntity(
+id INTEGER NOT NULL PRIMARY KEY,
+title TEXT NOT NULL,
+image TEXT NOT NULL,
+summary TEXT NOT NULL
+);
+
+
+getRecipeById:
+SELECT *
+FROM foodEntity
+WHERE id = ?;
+
+
+INSERT OR REPLACE
+INTO foodEntity
+VALUES(?,?,?,?);

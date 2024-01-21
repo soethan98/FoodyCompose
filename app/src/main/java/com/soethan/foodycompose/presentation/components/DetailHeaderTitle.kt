@@ -3,9 +3,11 @@ package com.soethan.foodycompose.presentation.components
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -18,7 +20,8 @@ import com.soethan.foodycompose.R
 @Composable
 fun DetailHeaderTitle(
     onPopPage: () -> Unit,
-    onAddToFavorite: () -> Unit
+    onAddToFavorite: () -> Unit,
+    isItemFav: Boolean = false
 ) {
 
     TopAppBar(title = {
@@ -35,11 +38,18 @@ fun DetailHeaderTitle(
         }
     }, actions = {
         IconButton(onClick = { onAddToFavorite() }) {
-            Icon(
-                imageVector = Icons.Default.Favorite,
-                contentDescription = "Favorite",
-                tint = Color.White
-            )
+            if (isItemFav)
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = "fav",
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            else
+                Icon(
+                    imageVector = Icons.Default.FavoriteBorder,
+                    contentDescription = "fav_border",
+                    tint = Color.Red
+                )
         }
     })
 

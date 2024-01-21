@@ -6,7 +6,7 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("kotlinx-serialization")
-
+    id("app.cash.sqldelight")
 }
 
 
@@ -51,7 +51,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.0"
+        kotlinCompilerExtensionVersion = "1.5.6"
     }
     packaging {
         resources {
@@ -62,7 +62,7 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.9.21")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.0")
     implementation("androidx.compose.ui:ui")
@@ -122,8 +122,8 @@ dependencies {
     implementation("com.github.skydoves:sandwich-ktor:2.0.5")
 
     /// Db
-//    implementation("app.cash.sqldelight:android-driver:2.0.1")
-    implementation("app.cash.sqldelight:android-driver:2.0.0")
+    implementation("app.cash.sqldelight:android-driver:2.0.1")
+    implementation("app.cash.sqldelight:coroutines-extensions:2.0.1")
 
 }
 
@@ -131,3 +131,16 @@ dependencies {
 kapt {
     correctErrorTypes = true
 }
+
+
+sqldelight{
+    databases{
+        create("RecipeDatabase"){
+            packageName.set("com.soethan.foodcompose.database")
+        }
+    }
+}
+//    RecipeDatabase{
+//        packageName = "com.soethan"
+//    }
+//}
