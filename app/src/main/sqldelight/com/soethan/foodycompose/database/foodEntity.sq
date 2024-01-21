@@ -1,9 +1,25 @@
+import com.soethan.foodycompose.data.models.IngredientDto;
+import kotlin.Boolean;
+import kotlin.collections.List;
+
 CREATE TABLE foodEntity(
 id INTEGER NOT NULL PRIMARY KEY,
 title TEXT NOT NULL,
 image TEXT NOT NULL,
-summary TEXT NOT NULL
-);
+summary TEXT NOT NULL,
+vegan INTEGER AS Boolean DEFAULT 0,
+vegetarian INTEGER AS Boolean DEFAULT 0,
+veryHealthy INTEGER AS Boolean DEFAULT 0,
+readyInMinutes INTEGER,
+sourceName TEXT,
+sourceUrl TEXT NOT NULL,
+glutenFree INTEGER AS Boolean DEFAULT 0,
+diaryFree INTEGER AS Boolean DEFAULT 0,
+cheap INTEGER AS Boolean DEFAULT 1,
+healthScore REAL,
+ingredients TEXT AS List<IngredientDto> NOT NULL);
+
+
 
 
 getRecipeById:
@@ -11,7 +27,6 @@ SELECT *
 FROM foodEntity
 WHERE id = ?;
 
-
-INSERT OR REPLACE
-INTO foodEntity
-VALUES(?,?,?,?);
+addToFavorite:
+INSERT OR REPLACE INTO foodEntity
+VALUES ?;
