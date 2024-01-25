@@ -14,7 +14,8 @@ data class RecipeEntity(
     val readyInMinutes: Int,
     val healthScore: Double,
     val sourceUrl:String,
-    val ingredients: List<IngredientEntity>
+    val ingredients: List<IngredientEntity>,
+    val isFavorite:Boolean = false
 )
 
 

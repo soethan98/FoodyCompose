@@ -11,6 +11,7 @@ import com.soethan.foodycompose.domain.onException
 import com.soethan.foodycompose.domain.onSuccess
 import com.soethan.foodycompose.domain.repo.FoodRepo
 import com.soethan.foodycompose.utils.Resource
+import com.soethan.foodycompose.utils.data
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,15 +41,15 @@ class RecipeDetailViewModel @Inject constructor(
     }
 
 
-   private fun getRecipeInformation() {
+    private fun getRecipeInformation() {
         viewModelScope.launch {
 
-                _recipeDetailState.value = Resource.Loading
-           val result =  foodRepo.getRecipeInformation(recipeId)
-            result.collectLatest {  dataState ->
+            _recipeDetailState.value = Resource.Loading
+            val result = foodRepo.getRecipeInformation(recipeId)
+            result.collectLatest { dataState ->
                 dataState.onSuccess {
                     _recipeDetailState.value = Resource.Content(it)
-                }.onError{code, message ->
+                }.onError { code, message ->
                     _recipeDetailState.value =
                         Resource.Error(message = message ?: "Error Happened")
 
@@ -62,6 +63,30 @@ class RecipeDetailViewModel @Inject constructor(
     }
 
 
+    fun toggleFavorite(){
+
+    }
+
+
+    fun addToFavorite() {
+        viewModelScope.launch {
+            val currentRecipe = recipeDetailState.value.data()
+            currentRecipe?.let {
+                foodRepo.addToFav(it)
+            }
+        }
+    }
+
+
+    fun isInFavorite(){
+
+    }
+
+    fun removeFromFavorite(){
+        viewModelScope.launch {
+            foodRepo.removeFromFav(recipeId.toInt())
+        }
+    }
 
 
 }

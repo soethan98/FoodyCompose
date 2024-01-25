@@ -20,19 +20,18 @@ suspend fun <T : Any> DataState<T>.onSuccess(executable: suspend (T) -> Unit): D
         }
     }
 
-suspend fun <T : Any> DataState<T>.onError(executable: suspend (code:Int,message:String?) -> Unit): DataState<T> =
+suspend fun <T : Any> DataState<T>.onError(executable: suspend (code: Int, message: String?) -> Unit): DataState<T> =
     apply {
         if (this is DataState.Error) {
-            executable(code,message)
+            executable(code, message)
         }
     }
 
-suspend fun <T : Any> DataState<T>.onException(executable: suspend (e:Throwable) -> Unit): DataState<T> =
+suspend fun <T : Any> DataState<T>.onException(executable: suspend (e: Throwable) -> Unit): DataState<T> =
     apply {
         if (this is DataState.Exception) {
             executable(e)
         }
     }
-
 
 

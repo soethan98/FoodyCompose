@@ -8,6 +8,8 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import app.cash.sqldelight.logs.LogSqliteDriver
 import com.soethan.foodcompose.database.RecipeDatabase
 import com.soethan.foodycompose.BuildConfig
+import com.soethan.foodycompose.data.local.RecipeLocalDataSource
+import com.soethan.foodycompose.data.local.RecipeLocalDataSourceImpl
 import com.soethan.foodycompose.data.local.UserSettings
 import com.soethan.foodycompose.data.local.UserSettingsImpl
 import com.soethan.foodycompose.data.local.ingredientsAdapter
@@ -31,6 +33,13 @@ class DataModule {
         return FoodRemoteDataSourceImpl(spoonacularClient)
     }
 
+
+    @Singleton
+    @Provides
+    fun provideRecipeLocalDataSource(recipeDatabase: RecipeDatabase):RecipeLocalDataSource{
+        return RecipeLocalDataSourceImpl(recipeDatabase)
+    }
+
     @Singleton
     @Provides
     fun provideUserSettings(@ApplicationContext context: Context): UserSettings {
@@ -40,7 +49,7 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun initSqlDriver(applicationContext: Context): SqlDriver {
+    fun initSqlDriver(@ApplicationContext applicationContext: Context): SqlDriver {
         val androidSqliteDriver =
             AndroidSqliteDriver(RecipeDatabase.Schema, context = applicationContext, "recipe_db")
         return if (BuildConfig.DEBUG) {
@@ -53,7 +62,7 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideSqlDriver(@ApplicationContext context: Context, driver: SqlDriver): RecipeDatabase {
+    fun provideSqlDriver(driver: SqlDriver): RecipeDatabase {
         return RecipeDatabase(driver,FoodEntity.Adapter(
             ingredientsAdapter = ingredientsAdapter
         ))

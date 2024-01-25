@@ -43,7 +43,8 @@ fun FoodyNavigation(
         recipeListScreen(
             navController,
             bottomBarState = bottomBarState,
-            bottomBarPadding = bottomBarPadding,)
+            bottomBarPadding = bottomBarPadding,
+        )
         favoriteListScreen(
             navController,
             bottomBarState = bottomBarState,
@@ -95,7 +96,12 @@ fun NavGraphBuilder.favoriteListScreen(
         exitTransition = { fadeOut(animationSpec = tween(200)) }
     ) {
         bottomBarState.value = true
-        FavoriteListScreen()
+        FavoriteListScreen(
+            onNavigateToDetail = {
+                navController.navigate(Screens.RecipeDetail.passRecipeId(it.toString()))
+
+            }, onNavigateToSearch = {}
+        )
     }
 }
 

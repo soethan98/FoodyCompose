@@ -11,7 +11,6 @@ vegan INTEGER AS Boolean DEFAULT 0,
 vegetarian INTEGER AS Boolean DEFAULT 0,
 veryHealthy INTEGER AS Boolean DEFAULT 0,
 readyInMinutes INTEGER,
-sourceName TEXT,
 sourceUrl TEXT NOT NULL,
 glutenFree INTEGER AS Boolean DEFAULT 0,
 diaryFree INTEGER AS Boolean DEFAULT 0,
@@ -21,6 +20,9 @@ ingredients TEXT AS List<IngredientDto> NOT NULL);
 
 
 
+getAllFavRecipes:
+SELECT *
+FROM foodEntity;
 
 getRecipeById:
 SELECT *
@@ -30,3 +32,7 @@ WHERE id = ?;
 addToFavorite:
 INSERT OR REPLACE INTO foodEntity
 VALUES ?;
+
+
+removeFromFavorite:
+DELETE FROM foodEntity WHERE id = ?;

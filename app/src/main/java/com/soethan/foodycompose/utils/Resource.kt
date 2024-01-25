@@ -1,5 +1,7 @@
 package com.soethan.foodycompose.utils
 
+import com.soethan.foodycompose.domain.DataState
+
 sealed class Resource<out T : Any> {
 
 
@@ -17,4 +19,12 @@ sealed class Resource<out T : Any> {
             Idle -> "Idle"
         }
     }
+}
+
+
+fun <T : Any> Resource<T>.data(): T? {
+    if (this is Resource.Content<T>) {
+        return data
+    }
+    return null
 }

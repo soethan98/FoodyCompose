@@ -62,7 +62,9 @@ fun RecipeDetailScreen(
     Box(modifier = modifier.fillMaxWidth()) {
 
         Column {
-            DetailHeaderTitle(isItemFav = true, onPopPage = onPopPage, onAddToFavorite = {})
+            DetailHeaderTitle(isItemFav = true, onPopPage = onPopPage, onAddToFavorite = {
+                recipeDetailViewModel.addToFavorite()
+            })
             RecipeDetailTabTabRow(selectedIndex = selectedTabIndex, tabs = tabs, onTabSelected = {
                 selectedTabIndex = it
             })
