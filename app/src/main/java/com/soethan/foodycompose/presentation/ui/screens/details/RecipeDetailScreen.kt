@@ -67,7 +67,7 @@ fun RecipeDetailScreen(
                 isItemFav = recipeDetailState.data()?.isFavorite ?: false,
                 onPopPage = onPopPage,
                 onAddToFavorite = {
-                    recipeDetailViewModel.addToFavorite()
+                    recipeDetailViewModel.toggleFavorite()
                 })
             RecipeDetailTabTabRow(selectedIndex = selectedTabIndex, tabs = tabs, onTabSelected = {
                 selectedTabIndex = it

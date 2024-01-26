@@ -22,8 +22,10 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,10 +36,6 @@ class RecipeDetailViewModel @Inject constructor(
 ) : ViewModel() {
     private val recipeId: String = checkNotNull(savedStateHandle["recipeId"])
 
-
-    private val _ingredients = MutableStateFlow<List<IngredientEntity>?>(null)
-    val ingredientsStateFlow: StateFlow<List<IngredientEntity>?>
-        get() = _ingredients
 
     private val _recipeDetailState = MutableStateFlow<Resource<RecipeEntity>>(Resource.Idle)
     val recipeDetailState: StateFlow<Resource<RecipeEntity>>
@@ -60,6 +58,7 @@ class RecipeDetailViewModel @Inject constructor(
                     _recipeDetailState.value =
                         Content(it.copy(isFavorite = isFav))
 
+
                 }.onError { code, message ->
                     _recipeDetailState.value =
                         Resource.Error(message = message ?: "Error Happened")
@@ -68,58 +67,45 @@ class RecipeDetailViewModel @Inject constructor(
                     _recipeDetailState.value =
                         Resource.Error(message = exception.message ?: "Error Happened")
                 }
-            }.collect()
+            }.launchIn(viewModelScope)
         }
     }
 
 
-//    private fun getRecipeInformation() {
-//
-//        viewModelScope.launch {
-//            _recipeDetailState.value = Resource.Loading
-//            foodRepo.getRecipeInformation(recipeId).collectLatest { dataState ->
-//                dataState.onSuccess {
-//                    _recipeDetailState.value =
-//                        Content(it)
-//
-//                }.onError { code, message ->
-//                    _recipeDetailState.value =
-//                        Resource.Error(message = message ?: "Error Happened")
-//
-//                }.onException { exception ->
-//                    _recipeDetailState.value =
-//                        Resource.Error(message = exception.message ?: "Error Happened")
-//                }
-//            }
-//
-//        }
-//    }
-
-
-
-
-    suspend fun toggleFavorite() {
-
-    }
-
-
-    fun addToFavorite() {
-        viewModelScope.launch {
-            val currentRecipe = recipeDetailState.value.data()
-            currentRecipe?.let {
-                foodRepo.addToFav(it)
+    fun toggleFavorite() {
+        val currentRecipe = recipeDetailState.value.data()
+        currentRecipe?.let { recipe ->
+            when (recipe.isFavorite) {
+                true -> removeFromFavorite()
+                false -> addToFavorite()
             }
         }
     }
 
 
-    fun isInFavorite() {
-
+    private fun addToFavorite() {
+        viewModelScope.launch {
+            val currentRecipe = recipeDetailState.value.data()
+            currentRecipe?.let {
+                foodRepo.addToFav(it)
+                _recipeDetailState.update {
+                    Content(currentRecipe.copy(isFavorite = true))
+                }
+            }
+        }
     }
 
-    fun removeFromFavorite() {
+
+    private fun removeFromFavorite() {
         viewModelScope.launch {
             foodRepo.removeFromFav(recipeId.toInt())
+            val currentRecipe = recipeDetailState.value.data()
+            currentRecipe?.let {
+                _recipeDetailState.update {
+                    Content(currentRecipe.copy(isFavorite = false))
+                }
+
+            }
         }
     }
 
