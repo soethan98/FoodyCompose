@@ -100,12 +100,21 @@ class FoodRepositoryImpl @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun getAllFavRecipes(): Flow<DataState<List<RecipeEntity>>> {
 
-       return recipeLocalDataSource.getAllFavRecipes().catch {
-           DataState.Error(it.message, code = 1)
+        return recipeLocalDataSource.getAllFavRecipes().catch {
+            DataState.Error(it.message, code = 1)
         }.mapLatest {
-           val recipeEntities =  it.map { recipeLocalDataMapper.mapToRecipeEntity(it).copy(isFavorite = true) }
+            val recipeEntities =
+                it.map { recipeLocalDataMapper.mapToRecipeEntity(it).copy(isFavorite = true) }
             DataState.Success(recipeEntities)
         }
+    }
+
+    override suspend fun isFav(id: Int): Flow<Boolean> {
+        return flow<Boolean> {
+            val isFav = recipeLocalDataSource.isFavorite(id)
+            emit(isFav)
+        }.flowOn(Dispatchers.IO)
+
     }
 
 

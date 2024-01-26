@@ -17,4 +17,6 @@ interface FoodRepo {
     suspend fun getFavRecipe(id: Int): Flow<RecipeEntity>
 
     suspend fun getAllFavRecipes(): Flow<DataState<List<RecipeEntity>>>
+
+    suspend fun isFav(id:Int):Flow<Boolean>
 }

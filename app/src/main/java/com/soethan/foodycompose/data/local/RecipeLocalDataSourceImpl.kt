@@ -33,4 +33,8 @@ class RecipeLocalDataSourceImpl @Inject constructor(private val recipeDatabase: 
             .mapToList(Dispatchers.IO)
     }
 
+    override suspend fun isFavorite(id: Int): Boolean {
+        return recipeDatabase.foodEntityQueries.isFavoriteMovie(id.toLong()).executeAsOne() > 0
+    }
+
 }

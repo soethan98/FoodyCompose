@@ -10,4 +10,6 @@ interface RecipeLocalDataSource{
     suspend fun getFavEntity(id:Int): Flow<FoodEntity>
 
     suspend fun getAllFavRecipes():Flow<List<FoodEntity>>
+
+    suspend fun isFavorite(id:Int):Boolean
 }

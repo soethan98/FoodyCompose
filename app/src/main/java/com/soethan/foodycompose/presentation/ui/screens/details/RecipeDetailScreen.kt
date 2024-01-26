@@ -25,6 +25,7 @@ import com.soethan.foodycompose.presentation.components.DetailHeaderTitle
 import com.soethan.foodycompose.presentation.viewmodels.RecipeDetailViewModel
 import com.soethan.foodycompose.presentation.components.RecipeDetailTabTabRow
 import com.soethan.foodycompose.utils.Resource
+import com.soethan.foodycompose.utils.data
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -62,9 +63,12 @@ fun RecipeDetailScreen(
     Box(modifier = modifier.fillMaxWidth()) {
 
         Column {
-            DetailHeaderTitle(isItemFav = true, onPopPage = onPopPage, onAddToFavorite = {
-                recipeDetailViewModel.addToFavorite()
-            })
+            DetailHeaderTitle(
+                isItemFav = recipeDetailState.data()?.isFavorite ?: false,
+                onPopPage = onPopPage,
+                onAddToFavorite = {
+                    recipeDetailViewModel.addToFavorite()
+                })
             RecipeDetailTabTabRow(selectedIndex = selectedTabIndex, tabs = tabs, onTabSelected = {
                 selectedTabIndex = it
             })

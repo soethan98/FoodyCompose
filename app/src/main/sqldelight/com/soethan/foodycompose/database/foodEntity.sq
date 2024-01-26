@@ -36,3 +36,9 @@ VALUES ?;
 
 removeFromFavorite:
 DELETE FROM foodEntity WHERE id = ?;
+
+
+isFavoriteMovie:
+SELECT COUNT(*)
+FROM foodEntity
+WHERE id = ?;
