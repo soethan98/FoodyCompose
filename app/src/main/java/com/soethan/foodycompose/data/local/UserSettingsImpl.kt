@@ -23,6 +23,7 @@ class UserSettingsImpl @Inject constructor(
         context.getSharedPreferences("sample_theme", Context.MODE_PRIVATE)
 
     init {
+        "hello".reversed()
         themeStream = MutableStateFlow(theme)
     }
 

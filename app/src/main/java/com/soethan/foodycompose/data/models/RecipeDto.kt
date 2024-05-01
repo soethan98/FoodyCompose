@@ -4,11 +4,11 @@ import com.soethan.foodycompose.domain.models.RecipeEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
+@Serializable()
 data class RecipeDto(
     val id: Int,
     val title: String?,
-    val image: String?,
+    val image: String = "",
     val summary: String?,
     val vegan: Boolean,
     val vegetarian: Boolean,

@@ -12,11 +12,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -28,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -38,6 +41,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
+import coil.request.ImageRequest
 import com.soethan.foodycompose.R
 import com.soethan.foodycompose.domain.models.RecipeEntity
 import com.soethan.foodycompose.utils.parseHTMLSpanned
@@ -52,7 +57,7 @@ fun RecipeCardItem(
 
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp),)
+            .clip(RoundedCornerShape(16.dp))
             .clickable {
                 onNavigateToDetail()
             },
@@ -66,10 +71,24 @@ fun RecipeCardItem(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            AsyncImage(
-                model = recipeEntity!!.image, contentDescription = recipeEntity.title,
+            SubcomposeAsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(
+                        recipeEntity.image
+                    )
+                    .crossfade(true)
+                    .build(),
+                contentDescription = recipeEntity.title,
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.Center,
+                loading = {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .size(24.dp)
+                            .align(Alignment.Center)
+                            .wrapContentSize()
+                    )
+                },
                 modifier = Modifier
                     .size(100.dp)
                     .clip(RoundedCornerShape(16.dp))
