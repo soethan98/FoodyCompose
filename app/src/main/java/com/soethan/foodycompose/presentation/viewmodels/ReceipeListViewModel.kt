@@ -25,7 +25,7 @@ class RecipeListViewModel @Inject constructor(private val foodRepo: FoodRepo) : 
         get() = _recipeListStateFlow
 
     init {
-        getRandomRecipes()
+      //  getRandomRecipes()
     }
 
     private fun getRandomRecipes() {

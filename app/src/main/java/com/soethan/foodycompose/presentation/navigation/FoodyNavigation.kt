@@ -79,7 +79,9 @@ fun NavGraphBuilder.recipeListScreen(
         RecipeListScreen(onNavigateToDetail = {
             navController.navigate(Screens.RecipeDetail.passRecipeId(it.toString()))
 
-        }, onNavigateToSearch = {})
+        }, onNavigateToSearch = {
+
+        })
     }
 }
 

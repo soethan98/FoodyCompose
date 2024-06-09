@@ -1,6 +1,7 @@
 package com.soethan.foodycompose.data.repository
 
 import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.suspendOnSuccess
 import com.soethan.foodycompose.data.models.FoodJokeDto
 import com.soethan.foodycompose.data.models.FoodRecipeDto
 import com.soethan.foodycompose.data.models.RecipeDto
@@ -12,7 +13,7 @@ class FoodRemoteDataSourceImpl @Inject constructor(
 ) : FoodRemoteDataSource {
 
     override suspend fun getRandomRecipes(): ApiResponse<FoodRecipeDto> {
-        return spoonacularClient.getRandomRecipes()
+      return spoonacularClient.getRandomRecipes()
     }
 
     override suspend fun getRandomJokes(): ApiResponse<FoodJokeDto> {

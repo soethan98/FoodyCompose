@@ -26,7 +26,8 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class DataModule {
+class
+DataModule {
     @Singleton
     @Provides
     fun provideFoodRemoteDataSource(spoonacularClient: SpoonacularClient): FoodRemoteDataSource {

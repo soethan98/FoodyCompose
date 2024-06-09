@@ -52,7 +52,6 @@ fun FoodJokeScreen(
     val appThemeMode by mainViewModel.appThemeState.collectAsState()
     val snackbarHostState = LocalSnackBarHostState.current
 
-
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = result) {
