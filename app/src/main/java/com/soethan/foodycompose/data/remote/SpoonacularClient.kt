@@ -52,8 +52,10 @@ class SpoonacularClient @Inject constructor() {
         return httpClient.getApiResponse<FoodRecipeDto>(RANDOM_RECIPES_URL) {
             parameter("number", "20")
             parameter("apiKey", BuildConfig.API_KEY)
+            parameter("include-tags","vegetarian,marinade")
         }
     }
+
 
     suspend fun getRandomFoodJoke(): ApiResponse<FoodJokeDto> {
         return httpClient.getApiResponse<FoodJokeDto>(RANDOM_FOOD_JOKE) {

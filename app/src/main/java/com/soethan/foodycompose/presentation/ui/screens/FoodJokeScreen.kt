@@ -49,7 +49,7 @@ fun FoodJokeScreen(
     onNavigateToSearch: () -> Unit
 ) {
     val result by foodJokeViewModel.randomJokeState.collectAsStateWithLifecycle()
-    val appThemeMode by mainViewModel.appThemeState.collectAsState()
+    val appThemeMode by mainViewModel.appThemeState.collectAsStateWithLifecycle()
     val snackbarHostState = LocalSnackBarHostState.current
 
     val scope = rememberCoroutineScope()

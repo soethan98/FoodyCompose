@@ -36,10 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.soethan.foodycompose.domain.models.DIET_TYPE_LIST
-import com.soethan.foodycompose.domain.models.DietType
 import com.soethan.foodycompose.domain.models.MEAL_TYPE_LIST
 import com.soethan.foodycompose.domain.models.MealAndDietType
-import com.soethan.foodycompose.domain.models.MealType
 import com.soethan.foodycompose.domain.models.RecipeEntity
 import com.soethan.foodycompose.presentation.components.FilterChips
 import com.soethan.foodycompose.presentation.components.FilterSheetContent
@@ -71,6 +69,8 @@ fun RecipeListScreen(
 
 
     val recipeListState by recipeListViewModel.recipeListStateFlow.collectAsStateWithLifecycle()
+    val mealAndDietType by recipeListViewModel.readMealAndDietType.collectAsStateWithLifecycle()
+
     LaunchedEffect(key1 = recipeListState) {
         recipeListState.onError { message ->
             scope.launch {
@@ -87,10 +87,11 @@ fun RecipeListScreen(
         Column(verticalArrangement = Arrangement.Top) {
             MainHeaderTitle(title = "Random", actionMenu = {
                 SearchMenu {
-                    if (!sheetState.isVisible) {
-                        showBottomSheet = true
-
-                    }
+                    showBottomSheet = true
+//
+//                    if (!sheetState.isVisible) {
+//
+//                    }
                 }
             })
             when (recipeListState) {
@@ -111,11 +112,9 @@ fun RecipeListScreen(
                 sheetState = sheetState,
             ) {
                 FilterSheetContent(
-                    selectedItem = MealAndDietType(
-                        MealType.MAIN_COURSE,
-                        DietType.GLUTEN_FREE
-                    ), onApplyFilter = {
-
+                    selectedItem = mealAndDietType, onApplyFilter = {
+                        showBottomSheet = false
+                        recipeListViewModel.requestFilteredRecipe(it)
                     }
                 )
             }

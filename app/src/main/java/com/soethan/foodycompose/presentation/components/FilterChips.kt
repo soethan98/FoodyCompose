@@ -27,10 +27,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.soethan.foodycompose.domain.models.DIET_TYPE_LIST
-import com.soethan.foodycompose.domain.models.DietType
 import com.soethan.foodycompose.domain.models.MEAL_TYPE_LIST
 import com.soethan.foodycompose.domain.models.MealAndDietType
-import com.soethan.foodycompose.domain.models.MealType
 
 
 @Composable
@@ -39,8 +37,8 @@ fun FilterSheetContent(
     onApplyFilter: (MealAndDietType) -> Unit
 ) {
 
-    var selectedMeal by remember { mutableStateOf(selectedItem.selectedMealType.value) }
-    var selectedDiet by remember { mutableStateOf(selectedItem.selectedDietType.value) }
+    var selectedMeal by remember { mutableStateOf(selectedItem.selectedMealType) }
+    var selectedDiet by remember { mutableStateOf(selectedItem.selectedDietType) }
 
     Column(
         verticalArrangement = Arrangement.Top,
@@ -54,7 +52,7 @@ fun FilterSheetContent(
     ) {
         FilterChips(
             title = "Meal",
-            chips = MEAL_TYPE_LIST.map { it.value },
+            chips = MEAL_TYPE_LIST,
             onSelectedChanged = {
                 selectedMeal = it
             },
@@ -63,7 +61,7 @@ fun FilterSheetContent(
         Spacer(modifier = Modifier.height(24.dp))
         FilterChips(
             title = "Diet",
-            chips = DIET_TYPE_LIST.map { it.value },
+            chips = DIET_TYPE_LIST,
             onSelectedChanged = {
                 selectedDiet = it
             },
@@ -72,8 +70,8 @@ fun FilterSheetContent(
         Spacer(modifier = Modifier.height(24.dp))
         ElevatedButton(onClick = {
             onApplyFilter(
-                MealAndDietType(MEAL_TYPE_LIST.single { it.value.lowercase() == selectedMeal.lowercase() },
-                    DIET_TYPE_LIST.single { it.value.lowercase() == selectedDiet.lowercase() })
+                MealAndDietType(MEAL_TYPE_LIST.single { it.lowercase() == selectedMeal.lowercase() },
+                    DIET_TYPE_LIST.single { it.lowercase() == selectedDiet.lowercase() })
             )
         }, modifier = Modifier.fillMaxWidth()) {
             Text(text = "Apply".uppercase())

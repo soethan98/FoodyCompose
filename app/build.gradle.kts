@@ -70,6 +70,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.material3:material3-android:1.2.1")
+    implementation("androidx.datastore:datastore-preferences-core-jvm:1.1.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -96,6 +97,7 @@ dependencies {
     /// Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
 
     /// Navigation
     implementation("androidx.navigation:navigation-compose:2.7.5")
@@ -124,6 +126,9 @@ dependencies {
     /// Db
     implementation("app.cash.sqldelight:android-driver:2.0.1")
     implementation("app.cash.sqldelight:coroutines-extensions:2.0.1")
+
+    /// DataStore
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 
 }
 
