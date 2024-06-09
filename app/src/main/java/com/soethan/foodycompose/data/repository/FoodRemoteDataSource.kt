@@ -6,7 +6,7 @@ import com.soethan.foodycompose.data.models.FoodRecipeDto
 import com.soethan.foodycompose.data.models.RecipeDto
 
 interface FoodRemoteDataSource {
-    suspend fun getRandomRecipes(): ApiResponse<FoodRecipeDto>
+    suspend fun getRandomRecipes(mealType:String?,dietType:String?): ApiResponse<FoodRecipeDto>
     suspend fun getRandomJokes(): ApiResponse<FoodJokeDto>
 
     suspend fun getRecipeDetail(id:String): ApiResponse<RecipeDto>

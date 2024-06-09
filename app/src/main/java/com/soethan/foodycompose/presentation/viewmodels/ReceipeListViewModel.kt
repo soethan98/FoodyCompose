@@ -2,7 +2,6 @@ package com.soethan.foodycompose.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.soethan.foodycompose.domain.DataState
 import com.soethan.foodycompose.domain.models.MealAndDietType
 import com.soethan.foodycompose.domain.models.RecipeEntity
 import com.soethan.foodycompose.domain.onError
@@ -16,7 +15,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -38,16 +36,18 @@ class RecipeListViewModel @Inject constructor(
         initialValue = MealAndDietType()
     )
 
+
     init {
-        getRandomRecipes()
+        getRecipes()
     }
 
-    private fun getRandomRecipes() {
+    private fun getRecipes() {
 
 
         viewModelScope.launch {
             _recipeListStateFlow.value = Resource.Loading
-            foodRepo.getRandomRecipes().collectLatest { dataState ->
+            val currentMealAndDietType = readMealAndDietType.value
+            foodRepo.getRandomRecipes(currentMealAndDietType).collectLatest { dataState ->
                 dataState.onSuccess {
                     _recipeListStateFlow.value = Resource.Content(data = it)
 
@@ -67,20 +67,11 @@ class RecipeListViewModel @Inject constructor(
     }
 
 
-    private lateinit var mealAndDiet: MealAndDietType
-
-
     fun requestFilteredRecipe(mealAndDietType: MealAndDietType) {
         viewModelScope.launch(Dispatchers.IO) {
             userSettingRepo.writeMealAndDietType(mealAndDietType)
-
-//            if (this@RecipeListViewModel::mealAndDiet.isInitialized) {
-//            }
+            getRecipes()
         }
-    }
-
-    fun saveMealAndDietTypeTemp(mealAndDietType: MealAndDietType) {
-        this.mealAndDiet = mealAndDietType
     }
 
 

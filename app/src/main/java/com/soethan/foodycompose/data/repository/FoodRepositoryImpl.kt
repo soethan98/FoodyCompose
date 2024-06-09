@@ -11,6 +11,7 @@ import com.soethan.foodycompose.data.mapper.RecipeLocalDataMapper
 import com.soethan.foodycompose.data.models.toRecipeEntity
 import com.soethan.foodycompose.domain.DataState
 import com.soethan.foodycompose.domain.models.IngredientEntity
+import com.soethan.foodycompose.domain.models.MealAndDietType
 import com.soethan.foodycompose.domain.models.RecipeEntity
 import com.soethan.foodycompose.domain.repo.FoodRepo
 import kotlinx.coroutines.Dispatchers
@@ -31,9 +32,12 @@ class FoodRepositoryImpl @Inject constructor(
 ) :
     FoodRepo {
 
-    override suspend fun getRandomRecipes(): Flow<DataState<List<RecipeEntity>>> {
+    override suspend fun getRandomRecipes(mealAndDietType: MealAndDietType): Flow<DataState<List<RecipeEntity>>> {
         return flow {
-            val response = foodRemoteDataSource.getRandomRecipes()
+            val response = foodRemoteDataSource.getRandomRecipes(
+                mealType = mealAndDietType.selectedMealType,
+                dietType = mealAndDietType.selectedDietType
+            )
             response.suspendOnSuccess {
                 val mappedData = this.data.recipes.map { it.toRecipeEntity() }
                 emit(DataState.Success(mappedData))

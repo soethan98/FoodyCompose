@@ -48,11 +48,14 @@ class SpoonacularClient @Inject constructor() {
     }
 
 
-    suspend fun getRandomRecipes(): ApiResponse<FoodRecipeDto> {
+    suspend fun getRandomRecipes(mealType: String?, dietType: String?): ApiResponse<FoodRecipeDto> {
         return httpClient.getApiResponse<FoodRecipeDto>(RANDOM_RECIPES_URL) {
             parameter("number", "20")
             parameter("apiKey", BuildConfig.API_KEY)
-            parameter("include-tags","vegetarian,marinade")
+            if (!mealType.isNullOrEmpty() && !dietType.isNullOrEmpty()) {
+                parameter("include-tags", "$mealType,$dietType")
+
+            }
         }
     }
 

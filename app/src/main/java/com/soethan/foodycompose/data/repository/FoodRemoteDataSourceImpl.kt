@@ -12,8 +12,11 @@ class FoodRemoteDataSourceImpl @Inject constructor(
     private val spoonacularClient: SpoonacularClient
 ) : FoodRemoteDataSource {
 
-    override suspend fun getRandomRecipes(): ApiResponse<FoodRecipeDto> {
-      return spoonacularClient.getRandomRecipes()
+    override suspend fun getRandomRecipes(
+        mealType: String?,
+        dietType: String?
+    ): ApiResponse<FoodRecipeDto> {
+      return spoonacularClient.getRandomRecipes(mealType,dietType)
     }
 
     override suspend fun getRandomJokes(): ApiResponse<FoodJokeDto> {
