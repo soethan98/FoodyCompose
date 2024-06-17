@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 @Composable
 fun MainHeaderTitle(
     title: String,
-    actionMenu: @Composable () -> Unit,
+    actionMenu: @Composable () -> Unit
 ) {
 
     TopAppBar(title = {

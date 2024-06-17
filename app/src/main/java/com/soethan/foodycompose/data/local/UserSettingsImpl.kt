@@ -50,20 +50,7 @@ class UserSettingsImpl @Inject constructor(@ApplicationContext val context: Cont
             pref[PreferencesKeys.MEAL_TYPE] ?: ""
         }
     }
-//    override fun getMealAndDiet(): Flow<MealAndDietType> {
-//       return  context.dataStore.data.catch { exception ->
-//            if (exception is IOException) {
-//                emit(emptyPreferences())
-//            } else {
-//                throw exception
-//            }
-//        }.map {
-//            val meal = MealType.valueOf(it[PreferencesKeys.MEAL_TYPE] ?: MealType.MAIN_COURSE.value)
-//            val diet = DietType.valueOf(it[PreferencesKeys.DIET_TYPE] ?: DietType.GLUTEN_FREE.value)
-//            MealAndDietType(selectedDietType = diet, selectedMealType = meal)
-//
-//        }
-//    }
+
 
     override suspend fun setMealAndDiet(mealType: String, dietType: String) {
         context.dataStore.edit { settings ->
@@ -97,40 +84,3 @@ class UserSettingsImpl @Inject constructor(@ApplicationContext val context: Cont
     }
 
 }
-
-//class UserSettingsImpl @Inject constructor(
-//    @ApplicationContext context: Context
-//) : UserSettings {
-//
-//
-//
-//    override val themeStream: MutableStateFlow<AppTheme>
-//    override var theme: AppTheme by AppThemePreferenceDelegate("app_theme", AppTheme.MODE_AUTO)
-//
-//
-//    private val preferences: SharedPreferences =
-//        context.getSharedPreferences("sample_theme", Context.MODE_PRIVATE)
-//
-//    init {
-//        "hello".reversed()
-//        themeStream = MutableStateFlow(theme)
-//    }
-//
-//    inner class AppThemePreferenceDelegate(
-//        private val name: String,
-//        private val default: AppTheme
-//    ) : ReadWriteProperty<Any?, AppTheme> {
-//
-//
-//        override fun getValue(thisRef: Any?, property: KProperty<*>): AppTheme =
-//            AppTheme.fromOrdinal(preferences.getInt(name, default.ordinal))
-//
-//        override fun setValue(thisRef: Any?, property: KProperty<*>, value: AppTheme) {
-//
-//            themeStream.value = value
-//            preferences.edit{
-//                putInt(name,value.ordinal)
-//            }
-//        }
-//    }
-//}

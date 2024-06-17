@@ -56,6 +56,9 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/LICENSE.md"
+            excludes += "/META-INF/LICENSE-notice.md"
+
         }
     }
 }
@@ -72,11 +75,7 @@ dependencies {
     implementation("androidx.compose.material3:material3-android:1.2.1")
     implementation("androidx.datastore:datastore-preferences-core-jvm:1.1.1")
 
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     /// Dagger Hilt
@@ -130,7 +129,51 @@ dependencies {
     /// DataStore
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 
+    /// Testing
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test:core:1.5.0")
+    androidTestImplementation("androidx.test:runner:1.5.2")
+    androidTestImplementation("androidx.test:rules:1.5.0")
+
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation("io.mockk:mockk-android:1.13.11")
+    testImplementation("io.mockk:mockk:1.13.11")
+
+
+
+
+
+
+//    testImplementation("org.mockito:mockito-core:5.5.0")
+//    androidTe("io.mockk:mockk:1.13.11")
+//    testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
+
+
+//    androidx-compose-ui-test = { module = "androidx.compose.ui:ui-test" }
+//    androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+//    androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+
+//    androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test = 1.5.0" }
+//    androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-test-espresso" }
+//    androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-test-ext-junit" }
+//    androidx-test-ext-truth = { module = "androidx.test.ext:truth", version.ref = "androidx-test-ext-truth" }
+//    androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test" }
+//    androidx-test-runner = "androidx.test:runner:1.5.2"
+//    junit = { module = "junit:junit", version.ref = "junit" }
+
+//    android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
+
 }
+
+
+//androidx-test = "1.5.0"
+//androidx-test-espresso = "3.5.1"
+//androidx-test-ext-junit = "1.1.5"
+//androidx-test-ext-truth = "1.5.0"
 
 // Allow references to generated code
 kapt {
